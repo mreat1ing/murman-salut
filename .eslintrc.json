@@ -42,7 +42,7 @@
   },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": ["*.ts", "*.tsx", "*.jsx"],
       "extends": ["plugin:@typescript-eslint/recommended"],
       "parserOptions": {
         "project": ["./tsconfig.eslint.json"],
