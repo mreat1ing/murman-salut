@@ -1,0 +1,13 @@
+node_modules
+build
+dist
+/.vscode
+/.git
+.prettierrc
+.eslintrc.json
+vite-env.d.ts
+vite.config.ts
+setupTests.ts
+coverage
+.husky
+commitlint.config.cjs
