@@ -1,8 +1,15 @@
 .header {
-  position: relative;
-  top: 0;
-  width: 100%;
+  transform: translateY(0);
+  position: fixed;
+  z-index: 1500;
   height: 4.5rem;
+  transition: transform 0.3s;
+  width: 100%;
+  transform: translateY(-4.5rem);
+}
+
+.header.header--visible {
+  transform: translateY(0);
 }
 
 .header__image {
@@ -50,14 +57,22 @@
     rgba(0, 0, 0, 0.005) 93.33%,
     transparent
   );
+  transition: opacity 0.3s;
+}
+
+.header__gradient.header__gradient--visible::after {
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .header__gradient::after {
+  transition: opacity 0.3s ease;
   position: absolute;
   content: '';
   display: block;
   height: 12rem;
   width: 100%;
+  opacity: 0;
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.95),

@@ -8,15 +8,11 @@
 }
 
 .header-container {
-  position: sticky;
-  display: block;
-  top: 0;
   width: 100%;
+  max-width: 100%;
 }
 
 .middle-container {
-  flex: 1 0 auto;
-  margin: 0 auto;
   min-width: 1280px;
   background-color: #e2e2e2;
 }
