@@ -51,6 +51,13 @@
     }
   ],
   "rules": {
+    "jsx-a11y/mouse-events-have-key-events": [
+      "off",
+      {
+        "hoverInHandlers": ["onMouseEnter", "onPointerOver", "onPointerEnter"],
+        "hoverOutHandlers": ["onMouseLeave", "onPointerOut", "onPointerLeave"]
+      }
+    ],
     "no-console": "error",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
