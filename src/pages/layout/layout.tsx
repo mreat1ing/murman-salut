@@ -11,12 +11,12 @@ export default function Layout() {
       <div className="header-container">
         <Header />
       </div>
-      <div className="middle-container">
+      <div className="middle-container" style={{ height: 10000 }}>
         <Outlet />
       </div>
-      <div className="footer-container">
+      {/* <div className="footer-container">
         <Footer />
-      </div>
+      </div> */}
     </div>
   );
 }
