@@ -4,7 +4,7 @@
   position: relative;
   min-height: 100vh;
   z-index: 1;
-  background-color: #f4f4f4;
+  background-color: rgb(0, 0, 0);
 }
 
 .header-container {
@@ -17,6 +17,8 @@
 .middle-container {
   flex: 1 0 auto;
   margin: 0 auto;
+  min-width: 1280px;
+  background-color: #e2e2e2;
 }
 
 .footer-container {

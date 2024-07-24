@@ -15,3 +15,8 @@
 .header-button:hover {
   color: white;
 }
+
+.active > .header-button,
+.active > .header__cart > .header-button {
+  color: white;
+}
