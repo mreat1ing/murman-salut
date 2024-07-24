@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom';
 import HeaderButton from 'src/ui/header-button';
 
 import logo from '../../assets/img/logo.webp';
-
 import './Header.scss';
+import Cart from '../Cart';
 
 const Header: FC = () => {
   return (
@@ -23,10 +23,10 @@ const Header: FC = () => {
           <NavLink to="/about">
             <HeaderButton>О нас</HeaderButton>
           </NavLink>
+          <Cart />
         </nav>
       </div>
     </header>
   );
 };
-
 export default Header;
