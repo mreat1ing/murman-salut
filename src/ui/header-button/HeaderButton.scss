@@ -1,0 +1,22 @@
+.header-button {
+  cursor: pointer;
+  font-family: 'Roboto';
+  font-size: 1.2rem;
+  width: 6rem;
+  background-color: transparent;
+  color: rgb(209, 209, 209);
+  height: 40px;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  transition: color 0.2s;
+}
+
+.header-button:hover {
+  color: white;
+}
+
+.active > .header-button,
+.active > .header__cart > .header-button {
+  color: white;
+}
