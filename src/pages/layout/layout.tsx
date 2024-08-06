@@ -17,9 +17,9 @@ export default function Layout() {
         <BackgroundImage imageSrc={image} alt="Салют" />
         <Outlet />
       </div>
-      {/* <div className="footer-container">
+      <div className="footer-container">
         <Footer />
-      </div> */}
+      </div>
     </div>
   );
 }
