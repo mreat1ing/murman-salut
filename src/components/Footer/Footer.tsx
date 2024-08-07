@@ -1,5 +1,7 @@
 import { FC } from 'react';
+
 import './Footer.scss';
+import Vk from 'src/ui/icons/vk';
 
 const Footer: FC = () => {
   const curYear = new Date().getFullYear();
@@ -12,7 +14,9 @@ const Footer: FC = () => {
             Мы всегда готовы вам помочь.
           </span>
           <a href="mailto:salut.ks@gmail.com">Задать вопрос</a>
-          <div className="footer__socials-icons" />
+          <div className="footer__socials-icons">
+            <Vk />
+          </div>
         </div>
       </div>
       <div className="footer__info">
