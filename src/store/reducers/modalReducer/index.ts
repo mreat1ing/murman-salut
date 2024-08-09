@@ -1,11 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 
-import { SET_TYPE, SET_CLOSE_OPEN } from './constants';
+import { IState } from 'src/interfaces/state.interface';
 
-interface IState {
-  isModalOpen: boolean;
-  typeOfModal: string | null;
-}
+import { SET_TYPE, SET_CLOSE_OPEN } from './constants';
 
 const initialState: IState = {
   isModalOpen: false,
