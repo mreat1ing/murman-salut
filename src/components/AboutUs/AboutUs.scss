@@ -30,17 +30,25 @@
 .About-us__org-info {
   margin-top: 3rem;
   text-align: left;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+  color: white;
 }
 .About-us__license {
   margin-bottom: 3rem;
   font-size: 1.3rem;
 }
 .About-us__license--pics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   img {
     margin: 0 2rem;
     cursor: pointer;
     transition: 0.2s;
     border-radius: 4px;
   }
+}
+
+.About-us__license--pics img:hover {
+  scale: 1.2;
 }
