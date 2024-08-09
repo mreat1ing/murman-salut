@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { ISingleChildren } from 'src/interfaces/singleChildren';
+import { ISingleChildren } from 'src/interfaces/singleChildren.interface';
 
 import './Main.scss';
 
