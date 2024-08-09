@@ -1,0 +1,46 @@
+.About-us {
+  width: 80%;
+  margin: 3rem auto 6rem auto;
+  text-align: center;
+  color: rgb(220, 220, 220);
+  min-height: 800px;
+  width: 80%;
+  hr {
+    margin: 3rem 0;
+    border: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(0, 0, 0, 1) 100%
+    );
+  }
+}
+.About-us__title {
+}
+.About-us__description {
+  text-align: left;
+  color: rgb(214, 214, 214);
+  line-height: 1.68;
+  span {
+    margin-left: 2rem;
+  }
+}
+.About-us__org-info {
+  margin-top: 3rem;
+  text-align: left;
+  font-size: 0.8rem;
+}
+.About-us__license {
+  margin-bottom: 3rem;
+  font-size: 1.3rem;
+}
+.About-us__license--pics {
+  img {
+    margin: 0 2rem;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 4px;
+  }
+}
