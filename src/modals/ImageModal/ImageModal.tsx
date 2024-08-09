@@ -6,19 +6,18 @@ import ModalContainer from '../ModalContainer';
 import './ImageModal.scss';
 
 interface IImageModal {
-  src: string;
+  src: string | any;
   alt: string;
-  open: boolean;
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const modalContainer = document.getElementById('modals');
 
-const ImageModal: FC<IImageModal> = ({ src, alt, onClose, open }) => {
-  if (open && modalContainer) {
+const ImageModal: FC<IImageModal> = ({ src, alt, onClose }) => {
+  if (modalContainer) {
     return createPortal(
       <ModalContainer onClose={onClose}>
-        <img src={src} alt={alt} />
+        <img className="modal-image" src={src} alt={alt} />
       </ModalContainer>,
       modalContainer
     );
