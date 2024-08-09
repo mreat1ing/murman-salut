@@ -1,12 +1,10 @@
 import { FC } from 'react';
 
+import { ISingleChildren } from 'src/interfaces/singleChildren';
+
 import './Main.scss';
 
-interface IMain {
-  children: React.ReactElement;
-}
-
-const Main: FC<IMain> = ({ children }) => {
+const Main: FC<ISingleChildren> = ({ children }) => {
   return (
     <div className="middle-container">
       <div className="background-image" />
