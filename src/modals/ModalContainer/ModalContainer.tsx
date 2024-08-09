@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 
-import { ISingleChildren } from 'src/interfaces/singleChildren';
+import { ISingleChildren } from 'src/interfaces/singleChildren.interface';
 
 import './ModalContainer.scss';
 
@@ -8,7 +8,15 @@ interface IModalContainer extends ISingleChildren {
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const bodyElement = document.querySelector('body');
+
 const ModalContainer: FC<IModalContainer> = ({ children, onClose }) => {
+  useEffect(() => {
+    bodyElement?.classList.add('modal-open');
+
+    return () => bodyElement?.classList.remove('modal-open');
+  }, []);
+
   const handleCloseButton = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       onClose(false);
