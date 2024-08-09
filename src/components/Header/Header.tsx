@@ -53,6 +53,7 @@ const Header: FC = () => {
           </nav>
         </div>
       </header>
+      <div className="background-image" />
     </div>
   );
 };

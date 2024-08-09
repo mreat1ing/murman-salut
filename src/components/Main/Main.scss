@@ -1,19 +1,6 @@
 .middle-container {
   min-width: 320px;
   background-color: black;
-  min-height: 800px;
-}
-
-.background-image {
-  display: block;
-  max-width: 100%;
-  min-width: 700px;
-  height: 280px;
-  background-image: url('../../assets/img/firebg.jpg');
-  background-size: cover;
-  background-position: -50%;
-  justify-content: center;
+  max-width: 1440px;
   margin: 0 auto;
-  position: relative;
-  box-shadow: 0 -30px 25px 0 black inset;
 }
