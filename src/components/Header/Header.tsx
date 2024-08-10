@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState, memo } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import HeaderButton from 'src/ui/header-button';
@@ -57,4 +57,4 @@ const Header: FC = () => {
     </div>
   );
 };
-export default Header;
+export default memo(Header);
