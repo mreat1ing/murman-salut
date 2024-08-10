@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import ImageModal from 'src/modals/ImageModal';
 import useDispatchedModalActions from 'src/hooks/useDispatchedModalActions/useDispatchedModalActions';
-import { IState } from 'src/interfaces/state.interface';
+import { IModalState } from 'src/store/reducers/modalReducer/modalState.interface';
 
 import licenseSmall from '../../assets/img/licence-small.webp';
 import licenseBig from '../../assets/img/licence-big.webp';
@@ -17,8 +17,9 @@ import './AboutUs.scss';
 const AboutUs: FC = () => {
   const { setModalClose, setModalOpen, setModalType } =
     useDispatchedModalActions();
-  const isModalOpen = useSelector((state: IState) => state.isModalOpen);
-  const modalType = useSelector((state: IState) => state.typeOfModal) || '';
+  const isModalOpen = useSelector((state: IModalState) => state.isModalOpen);
+  const modalType =
+    useSelector((state: IModalState) => state.typeOfModal) || '';
   const [curModal, setCurModal] = useState('');
 
   const handleImage = (name: string, image: any) => {
