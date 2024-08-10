@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
-
-import StoreItem from '../StoreItem';
+import StoreItem from 'src/components/Store/StoreItem';
 
 import './ItemList.scss';
 
@@ -47,15 +46,23 @@ const tempItems: IStoreItem[] = [
 
 const ItemList: FC = () => {
   const [items, setItems] = useState<IStoreItem[] | null>(null);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setItems([...tempItems]), 3300);
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setItems([...tempItems]);
+      setLoading(false);
+    }, 3300);
 
     return () => clearTimeout(timer);
   }, []);
 
+  //TODO: replace with spinner or smth like that
+  if (isLoading) return <h2 style={{ textAlign: 'center' }}>LOADING...</h2>;
+
   return (
-    <ul>
+    <ul className="store__items">
       {items &&
         items.map((el) => {
           return <StoreItem key={el._id}>{el}</StoreItem>;
