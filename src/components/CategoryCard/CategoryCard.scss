@@ -9,27 +9,23 @@
   align-items: center;
   text-align: center;
   cursor: pointer;
-  margin: 16px;
   box-sizing: border-box;
+  margin: 16px;
   transition:
     background-color 0.2s ease,
     border 0.2s ease,
     color 0.2s ease;
   text-wrap: pretty;
+  outline: 0;
+  border: 0;
 }
 
-.category-card#all {
+.category-card.active {
   background-color: transparent;
   color: white;
   border: 2px solid white;
 }
 
-.category-card:hover {
+.category-card:not(.active):hover {
   background-color: #d8d8d8;
-}
-
-.category-card#all:hover {
-  border: 2px solid #d8d8d8;
-  background-color: #d8d8d8;
-  color: black;
 }
