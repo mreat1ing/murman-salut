@@ -129,8 +129,8 @@ const Store: FC = () => {
         <div className="store">
           <div className="store__header">
             <h2 className="store__title">{searchParams.get('category')}</h2>
-            <select>
-              <option value="" selected disabled hidden>
+            <select defaultValue="Сортировка">
+              <option value="Сортировка" disabled hidden>
                 Сортировка
               </option>
               <option>Сначала недорогие</option>
