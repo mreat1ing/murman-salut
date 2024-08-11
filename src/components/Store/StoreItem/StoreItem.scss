@@ -8,6 +8,7 @@
   height: 120px;
   padding: 16px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  transition: background-color 0.1s ease;
 }
 
 .store-item__image {
@@ -55,10 +56,14 @@
   margin-top: 12px;
   cursor: pointer;
   height: 50px;
-  width: 150px;
+  width: 180px;
   background-color: transparent;
   outline: 1px solid black;
   transition: background-color 0.1s ease;
+}
+
+.store-item:hover {
+  background-color: #ebebeb;
 }
 
 .store-item__buy-button:hover {
@@ -67,4 +72,12 @@
 
 .store-item__price {
   font-size: 20px;
+}
+
+.store-item__money-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-direction: row-reverse;
 }
