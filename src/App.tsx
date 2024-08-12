@@ -14,7 +14,6 @@ import Store from './pages/store';
 import About from './pages/about';
 import Card from './pages/card';
 import MainPage from './pages/main';
-import { IStoreItem } from './interfaces/storeItem.interface';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,11 +28,16 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const {setItems} = useDispatchedStoreActions();
+  const { setCategories, setCategoriesLoading } = useDispatchedStoreActions();
+
   useEffect(() => {
-    const items = db.loadItems();
-    items.then(res => setItems(res));
-  }, [setItems]);
+    const categories = db.loadCats();
+    setCategoriesLoading(true);
+    categories.then((res) => {
+      setCategories(res);
+      setCategoriesLoading(false);
+    });
+  }, [setCategories, setCategoriesLoading]);
   return <RouterProvider router={router} />;
 }
 
