@@ -14,7 +14,6 @@ import './Store.scss';
 
 const Store: FC = () => {
   const [categoriesList, setCategoriesList] = useState<React.ReactElement[]>();
-  const [searchParams, setSearchParams] = useSearchParams();
   const { setItems, setItemsLoading } = useDispatchedStoreActions();
   const categories = useSelector(
     (state: IStore) => state.storeItemsReducer.categories
@@ -22,6 +21,8 @@ const Store: FC = () => {
   const isCategoriesLoading = useSelector(
     (state: IStore) => state.storeItemsReducer.isCategoriesLoading
   );
+  const items = useSelector((state: IStore) => state.storeItemsReducer.items);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (!categories.length) return;
@@ -41,22 +42,22 @@ const Store: FC = () => {
   }, [categories, setSearchParams]);
 
   useEffect(() => {
+    if (items.length) return;
     setItemsLoading(true);
-    const items = db.loadItems();
-    items.then((res) => {
+    const dbItems = db.loadItems();
+    dbItems.then((res) => {
       setItems(res);
       setItemsLoading(false);
     });
-  }, [setItems, setItemsLoading]);
+  }, [items.length, setItems, setItemsLoading]);
 
   return (
     <div className="store-page">
-      {!isCategoriesLoading ? (
+      {isCategoriesLoading && <CategorySkeleton />}
+      {!isCategoriesLoading && (
         <ul className="store-page__categories">{categoriesList}</ul>
-      ) : (
-        <CategorySkeleton />
       )}
-      {searchParams.size && (
+      {searchParams.size && !isCategoriesLoading ? (
         <div className="store">
           <div className="store__header">
             <h2 className="store__title">{searchParams.get('category')}</h2>
@@ -71,7 +72,7 @@ const Store: FC = () => {
 
           <ItemList />
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

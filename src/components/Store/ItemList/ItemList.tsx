@@ -13,9 +13,8 @@ const ItemList: FC = () => {
   );
   const items = useSelector((state: IStore) => state.storeItemsReducer.items);
 
-  //TODO: replace with spinner or smth like that
-  if (isItemsLoading)
-    return <h2 style={{ textAlign: 'center' }}>LOADING...</h2>;
+  // //TODO: replace with spinner or smth like that
+  // if (isItemsLoading) return <h2>LOADING</h2>;
 
   return (
     <ul className="store__items">

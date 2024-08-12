@@ -70,6 +70,15 @@
   background-color: #fff;
 }
 
+.store-item__buy-button:disabled {
+  outline: none;
+  color: black;
+}
+
+.store-item__buy-button:disabled:hover {
+  background-color: initial;
+}
+
 .store-item__price {
   font-size: 20px;
 }
