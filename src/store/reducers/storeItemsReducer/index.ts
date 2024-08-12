@@ -2,14 +2,25 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
 import { getAmountCart } from 'src/utils/localStore.utils';
+import { ICategories } from 'src/interfaces/categories.interface';
 
 import { IStoreItems } from './storeItems.interface';
-import { ADD_ITEM, SET_ITEMS, SET_AMOUNT_CART } from './constants';
+import {
+  ADD_ITEM,
+  SET_ITEMS,
+  SET_AMOUNT_CART,
+  SET_ITEMS_LOADING,
+  SET_CATEGORIES_LOADING,
+  SET_CATEGORIES,
+} from './constants';
 
 const initialState = {
-  items: <IStoreItem[]>
-  [],
+  items: <IStoreItem[]>[],
+  categories: <ICategories[]>[],
+  curCategory: 'all',
   amountCart: getAmountCart() || 0,
+  isItemsLoading: false,
+  isCategoriesLoading: false,
 };
 
 export const storeItemsReducer = (
@@ -23,6 +34,12 @@ export const storeItemsReducer = (
       return { ...state, items: [...state.items, action.payload] };
     case SET_AMOUNT_CART:
       return { ...state, amountCart: action.payload };
+    case SET_ITEMS_LOADING:
+      return { ...state, isItemsLoading: action.payload };
+    case SET_CATEGORIES_LOADING:
+      return { ...state, isCategoriesLoading: action.payload };
+    case SET_CATEGORIES:
+      return { ...state, categories: action.payload };
     default:
       return state;
   }
