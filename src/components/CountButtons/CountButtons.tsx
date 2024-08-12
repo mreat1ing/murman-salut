@@ -1,17 +1,18 @@
 import { FC } from 'react';
 
+import { MAX_INPUT } from 'src/constants/cartInputCount';
+
 import './CountButtons.scss';
 
-// interface ICountButtons {}
+interface ICountButtons {
+  value: number | string;
+  minus: React.MouseEventHandler;
+  plus: React.MouseEventHandler;
+  input: React.ChangeEventHandler;
+}
 
-const CountButtons: FC = () => {
-  const handleDecreaseClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-  };
-  const hadleInputClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-  };
-  const handleIncreaseClick = (e: React.MouseEvent) => {
+const CountButtons: FC<ICountButtons> = ({ value, minus, plus, input }) => {
+  const handleInputClick = (e: React.MouseEvent) => {
     e.preventDefault();
   };
 
@@ -19,20 +20,21 @@ const CountButtons: FC = () => {
     <div className="count-buttons">
       <button
         className="count-buttons__button count-buttons__button-decrease"
-        onClick={handleDecreaseClick}
+        onClick={minus}
       >
         <i className="count-buttons__icon" />
       </button>
       <input
         className="count-buttons__input"
-        onClick={hadleInputClick}
-        max={999}
-        min={0}
+        onClick={handleInputClick}
+        onChange={input}
+        max={MAX_INPUT}
         type="number"
+        value={value}
       />
       <button
         className="count-buttons__button count-buttons__button-increase"
-        onClick={handleIncreaseClick}
+        onClick={plus}
       >
         <i className="count-buttons__icon" />
       </button>
