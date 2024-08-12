@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 
 import ImageModal from 'src/modals/ImageModal';
 import useDispatchedModalActions from 'src/hooks/useDispatchedModalActions/useDispatchedModalActions';
-import { IState } from 'src/interfaces/state.interface';
+import { IStore } from 'src/interfaces/store.interface';
 
 import licenseSmall from '../../assets/img/licence-small.webp';
 import licenseBig from '../../assets/img/licence-big.webp';
-import certificatSmall from '../../assets/img/certificate-small.webp';
-import certificatBig from '../../assets/img/certificate-big.webp';
+import certificateSmall from '../../assets/img/certificate-small.webp';
+import certificateBig from '../../assets/img/certificate-big.webp';
 import cerKatSmall from '../../assets/img/cer-kat-small.webp';
 import cerKatBig from '../../assets/img/cer-kat-big.webp';
 
@@ -17,11 +17,14 @@ import './AboutUs.scss';
 const AboutUs: FC = () => {
   const { setModalClose, setModalOpen, setModalType } =
     useDispatchedModalActions();
-  const isModalOpen = useSelector((state: IState) => state.isModalOpen);
-  const modalType = useSelector((state: IState) => state.typeOfModal) || '';
+  const isModalOpen = useSelector(
+    (state: IStore) => state.modalStore.isModalOpen
+  );
+  const modalType =
+    useSelector((state: IStore) => state.modalStore.typeOfModal) || '';
   const [curModal, setCurModal] = useState('');
 
-  const handleImage = (name: string, image: any) => {
+  const handleImage = (name: string, image: string) => {
     setModalType(name);
     setModalOpen();
     setCurModal(image);
@@ -62,9 +65,9 @@ const AboutUs: FC = () => {
           onClick={() => handleImage('license', licenseBig)}
         />
         <img
-          src={certificatSmall}
+          src={certificateSmall}
           alt="license"
-          onClick={() => handleImage('certificat', certificatBig)}
+          onClick={() => handleImage('certificat', certificateBig)}
         />
         <img
           src={cerKatSmall}

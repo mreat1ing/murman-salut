@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { ISingleChildren } from 'src/interfaces/singleChildren.interface';
 
@@ -8,4 +8,4 @@ const Main: FC<ISingleChildren> = ({ children }) => {
   return <div className="middle-container">{children}</div>;
 };
 
-export default Main;
+export default memo(Main);

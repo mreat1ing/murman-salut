@@ -1,0 +1,32 @@
+.store-page {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+  flex-direction: column;
+}
+
+.store-page__categories {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.store {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 48px;
+}
+
+.store__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.store__title {
+  margin: 0;
+  margin-bottom: 32px;
+  text-align: start;
+}
