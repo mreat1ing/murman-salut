@@ -1,6 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import {
+  MAX_INPUT,
+  DEFAULT_INPUT,
+  MIN_INPUT,
+} from 'src/constants/cartInputCount';
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
 import {
   addItemCart,
@@ -21,6 +26,8 @@ interface IStoreItemProps {
 
 const StoreItem: FC<IStoreItemProps> = ({ children }) => {
   const [inStorage, setInStorage] = useState(false);
+  const [inStorageCount, setInStorageCount] = useState(0);
+  const [inputValue, setInputValue] = useState(String(inStorageCount));
   const parsedChildren = JSON.stringify(children);
   const location = useLocation();
   const formatedPrice = Intl.NumberFormat('RU-ru', {
@@ -32,8 +39,84 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
     setInStorage(isItemInCart(parsedChildren));
   }, [parsedChildren]);
 
+  useEffect(() => {
+    const cartCount = getItemCartCount(parsedChildren);
+    setInStorageCount(cartCount);
+    setInputValue(String(cartCount));
+  }, [inStorage]);
+
+  if (!children) return <li className="store-item"></li>;
+
+  const removeItemFromStorage = () => {
+    removeItemCart(parsedChildren);
+    setInStorage(false);
+    setInStorageCount(0);
+
+    return 0;
+  };
+
   const handleButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (inStorage) {
+      removeItemFromStorage();
+      return;
+    }
+    addItemCart(parsedChildren);
+    setInStorage(true);
+  };
+
+  const handleChangeCount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    let value = e.target.value;
+    const numberedValue = Number(value);
+    if (value.startsWith('0')) {
+      value = value.slice(1);
+      setInputValue(value);
+    }
+    if (numberedValue > MAX_INPUT) {
+      setInputValue(String(MAX_INPUT));
+      setInStorageCount(MAX_INPUT);
+      setItemCartCount(parsedChildren, MAX_INPUT);
+    } else if (numberedValue < MIN_INPUT && value !== '') {
+      setInputValue(String(DEFAULT_INPUT));
+      setInStorageCount(DEFAULT_INPUT);
+      setItemCartCount(parsedChildren, DEFAULT_INPUT);
+    } else if (value === '') {
+      setInputValue(value);
+      setInStorageCount(DEFAULT_INPUT);
+      setItemCartCount(parsedChildren, DEFAULT_INPUT);
+    } else {
+      setInputValue(value);
+      setInStorageCount(numberedValue);
+      setItemCartCount(parsedChildren, numberedValue);
+    }
+  };
+
+  const handleIncreaseCount = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setInStorageCount((count) => {
+      const newCount = count + 1;
+      if (newCount <= MAX_INPUT) {
+        setItemCartCount(parsedChildren, newCount);
+        setInputValue(String(newCount));
+        return newCount;
+      }
+      setInputValue(String(count));
+      return count;
+    });
+  };
+
+  const handleDecreaseCount = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setInStorageCount((count) => {
+      const newCount = count - 1;
+      if (newCount > MIN_INPUT) {
+        setInputValue(String(newCount));
+        setItemCartCount(parsedChildren, newCount);
+        return newCount;
+      }
+      return removeItemFromStorage();
+    });
   };
 
   return (
@@ -63,8 +146,15 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
                 : 'Купить'}
           </button>
           <div className="store-item__money-container">
-            {inStorage && <CountButtons />}
             <span className="store-item__price">{formatedPrice}</span>
+            {inStorage && (
+              <CountButtons
+                value={inputValue}
+                plus={handleIncreaseCount}
+                minus={handleDecreaseCount}
+                input={handleChangeCount}
+              />
+            )}
           </div>
         </div>
       </li>
