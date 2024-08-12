@@ -23,7 +23,7 @@ const ItemList: FC = () => {
     }, 200);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [itemsList]);
 
   //TODO: replace with spinner or smth like that
   if (isLoading) return <h2 style={{ textAlign: 'center' }}>LOADING...</h2>;

@@ -119,7 +119,7 @@ const Store: FC = () => {
           </li>
         );
       }),
-    []
+    [setSearchParams]
   );
 
   return (
