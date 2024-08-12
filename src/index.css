@@ -3,6 +3,10 @@
   src: url('../src/assets/fonts/Roboto/Roboto-Medium.ttf');
 }
 
+/* html {
+  scroll-behavior: smooth;
+} */
+
 * {
   box-sizing: border-box;
 }
