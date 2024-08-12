@@ -34,11 +34,10 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
 
   const handleButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    
   };
 
   return (
-    <Link to={`/store/${children?._id}`} state={{ from: location }}>
+    <Link to={`/store/${children?.title}`} state={{ from: location }}>
       <li className="store-item">
         <img
           className="store-item__image"
