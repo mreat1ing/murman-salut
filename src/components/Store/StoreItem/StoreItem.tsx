@@ -54,8 +54,13 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
           <button
             className="store-item__buy-button"
             onClick={handleButtonClick}
+            disabled={children?.hide}
           >
-            {inStorage ? 'В корзине' : 'Купить'}
+            {inStorage
+              ? 'В корзине'
+              : children?.hide
+                ? 'Товара нет в наличии'
+                : 'Купить'}
           </button>
           <div className="store-item__money-container">
             {inStorage && <CountButtons />}

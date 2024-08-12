@@ -2,12 +2,12 @@ import { ILocalStorageCart } from 'src/interfaces/localStorage.interface';
 
 const initialCart = JSON.stringify({ items: [], amount: 0 });
 
-export const getDataById = (key: string) => {
-  return window.localStorage.getItem(key);
+const getDataById = (key: string) => {
+  return localStorage.getItem(key);
 };
 
-export const setDataById = (key: string, value: string) => {
-  window.localStorage.setItem(key, value);
+const setDataById = (key: string, value: string) => {
+  localStorage.setItem(key, value);
 };
 
 const parseCart = (): ILocalStorageCart => {
@@ -30,12 +30,12 @@ const setAmountCart = () => {
   setDataById('cart', newData);
 };
 
-export const getAmountCart = () => {
+const getAmountCart = () => {
   const parsedCartData = parseCart();
   return parsedCartData.amount;
 };
 
-export const setItemCartCount = (item: string, count: number) => {
+const setItemCartCount = (item: string, count: number) => {
   const parsedCartData = parseCart();
   const itemIndex = findIndexItemCart(item);
   const cartItem = { ...parsedCartData.items[itemIndex] };
@@ -53,7 +53,7 @@ export const setItemCartCount = (item: string, count: number) => {
   setAmountCart();
 };
 
-export const getItemCartCount = (item: string): number => {
+const getItemCartCount = (item: string): number => {
   const parsedCartData = parseCart();
   const itemIndex = findIndexItemCart(item);
   return parsedCartData?.items[itemIndex]?.count;
@@ -64,7 +64,7 @@ const findIndexItemCart = (item: string): number => {
   return parsedCartData.items.findIndex((el) => el.item === item);
 };
 
-export const addItemCart = (item: string) => {
+const addItemCart = (item: string) => {
   const parsedCartData = parseCart();
   const newData = JSON.stringify({
     items: [...parsedCartData.items, { item: item, count: 1 }],
@@ -74,7 +74,7 @@ export const addItemCart = (item: string) => {
   setAmountCart();
 };
 
-export const removeItemCart = (item: string) => {
+const removeItemCart = (item: string) => {
   const parsedCartData = parseCart();
   const itemIndex = findIndexItemCart(item);
   const newItems = [
@@ -89,10 +89,20 @@ export const removeItemCart = (item: string) => {
   setAmountCart();
 };
 
-export const isItemInCart = (item: string): boolean => {
+const isItemInCart = (item: string): boolean => {
   return findIndexItemCart(item) >= 0;
 };
 
-export const fullStorageClear = () => {
+const fullStorageClear = () => {
   window.localStorage.clear();
+};
+
+export {
+  fullStorageClear,
+  isItemInCart,
+  removeItemCart,
+  addItemCart,
+  getItemCartCount,
+  setItemCartCount,
+  getAmountCart,
 };
