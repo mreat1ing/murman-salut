@@ -3,6 +3,10 @@
   src: url('../src/assets/fonts/Roboto/Roboto-Medium.ttf');
 }
 
+/* html {
+  scroll-behavior: smooth;
+} */
+
 * {
   box-sizing: border-box;
 }
@@ -33,6 +37,7 @@ a {
 .app-container {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   position: relative;
   min-width: 700px;
   min-height: 100vh;

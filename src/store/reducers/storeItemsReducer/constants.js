@@ -1,3 +1,6 @@
 export const SET_ITEMS = 'SET_ITEMS';
 export const ADD_ITEM = 'ADD_ITEM';
 export const SET_AMOUNT_CART = 'SET_AMOUNT_CART';
+export const SET_ITEMS_LOADING = 'SET_ITEMS_LOADING';
+export const SET_CATEGORIES = 'SET_CATEGORIES';
+export const SET_CATEGORIES_LOADING = 'SET_CATEGORIES_LOADING';

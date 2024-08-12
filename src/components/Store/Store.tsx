@@ -1,130 +1,61 @@
-import { FC, useMemo, memo } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import CategoryCard from 'src/components/CategoryCard';
+import CategorySkeleton from 'src/common/categorySkeleton';
+import useDispatchedStoreActions from 'src/hooks/useDispatchedStoreActions/useDispatchedStoreActions';
+import { db } from 'src/services/db';
+import { IStore } from 'src/interfaces/store.interface';
 
-import './Store.scss';
 import ItemList from './ItemList';
 
-const categories = [
-  {
-    title: 'Хлопушки',
-    value: 'Хлопушки',
-    subcategories: [
-      {
-        title: 'Пневмохлопушки',
-        value: 'Пневмохлопушки',
-        subcategories: null,
-      },
-    ],
-  },
-  {
-    title: 'Салюты',
-    value: 'Салюты',
-    subcategories: [
-      {
-        title: 'Одиночные салюты',
-        value: 'Одиночные салюты',
-        subcategories: null,
-      },
-      {
-        title: 'Батареи салютов',
-        value: 'Батареи салютов',
-        subcategories: null,
-      },
-      {
-        title: 'Дневные салюты',
-        value: 'Дневные салюты',
-        subcategories: null,
-      },
-    ],
-  },
-  {
-    title: 'Вертушки',
-    value: 'Вертушки',
-    subcategories: [
-      {
-        title: 'Вертушки летающие',
-        value: 'Вертушки летающие',
-        subcategories: null,
-      },
-      {
-        title: 'Вертушки наземные',
-        value: 'Вертушки наземные',
-        subcategories: null,
-      },
-    ],
-  },
-  {
-    title: 'Свечи',
-    value: 'Свечи',
-    subcategories: [
-      {
-        title: 'Римские свечи',
-        value: 'Римские свечи',
-        subcategories: null,
-      },
-      {
-        title: 'Бенгальские свечи',
-        value: 'Бенгальские свечи',
-        subcategories: null,
-      },
-    ],
-  },
-  {
-    title: 'Петарды',
-    value: 'Петарды',
-    subcategories: null,
-  },
-  {
-    title: 'Ракеты',
-    value: 'Ракеты',
-    subcategories: null,
-  },
-  {
-    title: 'Фонтаны',
-    value: 'Фонтаны',
-    subcategories: null,
-  },
-  {
-    title: 'Комби',
-    value: 'Комби',
-    subcategories: null,
-  },
-
-  {
-    title: 'Дымы цветные',
-    value: 'Дымы цветные',
-    subcategories: null,
-  },
-  {
-    title: 'Все',
-    value: 'all',
-    subcategories: null,
-  },
-];
+import './Store.scss';
 
 const Store: FC = () => {
+  const [categoriesList, setCategoriesList] = useState<React.ReactElement[]>();
   const [searchParams, setSearchParams] = useSearchParams();
-  const categoriesList = useMemo(
-    () =>
+  const { setItems, setItemsLoading } = useDispatchedStoreActions();
+  const categories = useSelector(
+    (state: IStore) => state.storeItemsReducer.categories
+  );
+  const isCategoriesLoading = useSelector(
+    (state: IStore) => state.storeItemsReducer.isCategoriesLoading
+  );
+
+  useEffect(() => {
+    if (!categories.length) return;
+    setCategoriesList(
       categories.map((el) => {
         return (
           <li key={el.value}>
             <CategoryCard
-              onClick={() => setSearchParams(`category=${el.value}`)}
+              onClick={() => setSearchParams(`category=${el.title}`)}
               title={el.title}
-              value={el.value}
+              value={el.title}
             />
           </li>
         );
-      }),
-    []
-  );
+      })
+    );
+  }, [categories, setSearchParams]);
+
+  useEffect(() => {
+    setItemsLoading(true);
+    const items = db.loadItems();
+    items.then((res) => {
+      setItems(res);
+      setItemsLoading(false);
+    });
+  }, [setItems, setItemsLoading]);
 
   return (
     <div className="store-page">
-      <ul className="store-page__categories">{categoriesList}</ul>
+      {!isCategoriesLoading ? (
+        <ul className="store-page__categories">{categoriesList}</ul>
+      ) : (
+        <CategorySkeleton />
+      )}
       {searchParams.size && (
         <div className="store">
           <div className="store__header">

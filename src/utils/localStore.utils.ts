@@ -94,7 +94,7 @@ const isItemInCart = (item: string): boolean => {
 };
 
 const fullStorageClear = () => {
-  window.localStorage.clear();
+  localStorage.clear();
 };
 
 export {

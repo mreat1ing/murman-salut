@@ -13,7 +13,7 @@ const ProductCard: FC = () => {
   const [previewType, setPreviewType] = useState('image');
   const { id } = useParams();
   const item = useSelector((state: IStore) =>
-    state.storeItemsReducer.items.find((el) => el._id === id)
+    state.storeItemsReducer.items.find((el) => el.title === id)
   );
   const location = useLocation();
   const comesFrom =

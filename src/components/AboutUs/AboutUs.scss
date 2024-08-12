@@ -18,6 +18,7 @@
   }
 }
 .About-us__title {
+  user-select: none;
 }
 .About-us__description {
   text-align: left;
@@ -34,10 +35,12 @@
   color: white;
 }
 .About-us__license {
+  user-select: none;
   margin-bottom: 3rem;
   font-size: 1.3rem;
 }
 .About-us__license--pics {
+  user-select: none;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,4 +1,4 @@
-import { FC, useEffect, useLayoutEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
@@ -30,14 +30,14 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
 
   useEffect(() => {
     setInStorage(isItemInCart(parsedChildren));
-  }, []);
+  }, [parsedChildren]);
 
   const handleButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
   };
 
   return (
-    <Link to={`/store/${children?._id}`} state={{ from: location }}>
+    <Link to={`/store/${children?.title}`} state={{ from: location }}>
       <li className="store-item">
         <img
           className="store-item__image"
