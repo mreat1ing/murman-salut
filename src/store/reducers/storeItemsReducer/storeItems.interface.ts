@@ -1,5 +1,6 @@
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
 import { ICategories } from 'src/interfaces/categories.interface';
+import { ICartItem } from 'src/interfaces/cartItem.interface';
 
 export interface IStoreItems {
   items: IStoreItem[] | [];
@@ -8,4 +9,5 @@ export interface IStoreItems {
   curCategory: string;
   isItemsLoading: boolean;
   isCategoriesLoading: boolean;
+  cartItems: ICartItem[];
 }
