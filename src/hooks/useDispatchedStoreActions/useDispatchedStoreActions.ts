@@ -7,6 +7,7 @@ import {
   setItemsLoading,
   setCategoriesLoading,
   setCategories,
+  setCartItems,
 } from 'src/store/reducers/storeItemsReducer/actions/storeItemsActions';
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
 import { ICategories } from 'src/interfaces/categories.interface';
@@ -22,6 +23,7 @@ const useDispatchedStoreActions = () => {
     setCategoriesLoading: (value: boolean) =>
       dispatch(setCategoriesLoading(value)),
     setCategories: (value: ICategories[]) => dispatch(setCategories(value)),
+    setCartItems: (items: IStoreItem[]) => dispatch(setCartItems(items)),
   };
 };
 
