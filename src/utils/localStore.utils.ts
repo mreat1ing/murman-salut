@@ -15,6 +15,15 @@ const parseCart = (): ILocalStorageCart => {
   return JSON.parse(prevCartData);
 };
 
+const getCartItems = () => {
+  const parsedCartData = parseCart();
+  const parsedItems = parsedCartData.items.map((el) => {
+    const item = JSON.parse(el.item);
+    return {...item, count: el.count};
+  });
+  return parsedItems;
+};
+
 const countCartItems = (): number => {
   const parsedCartData = parseCart();
   return parsedCartData.items.reduce((acc, element) => acc + element.count, 0);
@@ -98,6 +107,7 @@ const fullStorageClear = () => {
 };
 
 export {
+  getCartItems,
   fullStorageClear,
   isItemInCart,
   removeItemCart,
