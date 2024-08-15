@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import {
   MAX_INPUT,
@@ -7,18 +8,24 @@ import {
   MIN_INPUT,
 } from 'src/constants/cartInputCount';
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
+// import {
+//   addItemCart,
+//   removeItemCart,
+//   isItemInCart,
+//   setItemCartCount,
+//   getItemCartCount,
+// } from 'src/utils/localStore.utils';
 import {
   addItemCart,
-  removeItemCart,
   isItemInCart,
-  setItemCartCount,
   getItemCartCount,
-} from 'src/utils/localStore.utils';
+} from 'src/utils/ls.utils';
 // import { ILocalStorageCart } from 'src/interfaces/localStorage.interface';
 import placeholder from 'src/assets/img/item-placeholder.png';
 import CountButtons from 'src/components/CountButtons';
-
 import './StoreItem.scss';
+import { IStore } from 'src/interfaces/store.interface';
+import useDispatchedStoreActions from 'src/hooks/useDispatchedStoreActions/useDispatchedStoreActions';
 
 interface IStoreItemProps {
   children?: IStoreItem;
@@ -27,28 +34,50 @@ interface IStoreItemProps {
 const StoreItem: FC<IStoreItemProps> = ({ children }) => {
   const [inStorage, setInStorage] = useState(false);
   const [inStorageCount, setInStorageCount] = useState(0);
+  const {setAmountCart, setCartItems} = useDispatchedStoreActions();
   const [inputValue, setInputValue] = useState(String(inStorageCount));
-  const parsedChildren = JSON.stringify(children);
   const location = useLocation();
+  const items = useSelector((state: IStore) => state.storeItemsReducer.items);
+  const cartItems = useSelector((state: IStore) => state.storeItemsReducer.cartItems);
+  // const amount = useSelector((state: IStore) => state.storeItemsReducer.amountCart);
   const formatedPrice = Intl.NumberFormat('RU-ru', {
     style: 'currency',
     currency: 'RUB',
   }).format(Number(children?.price));
 
   useEffect(() => {
-    setInStorage(isItemInCart(parsedChildren));
-  }, [parsedChildren]);
+    if (children) {
+      setInStorage(isItemInCart(children?.title));
+    }
+  }, [children]);
 
   useEffect(() => {
-    const cartCount = getItemCartCount(parsedChildren);
+    let cartCount = 0;
+    if (children) {
+      cartCount = getItemCartCount(children?.title);
+    }
+    
     setInStorageCount(cartCount);
     setInputValue(String(cartCount));
-  }, [inStorage]);
+  }, [inStorage, children]);
 
   if (!children) return <li className="store-item"></li>;
 
   const removeItemFromStorage = () => {
-    removeItemCart(parsedChildren);
+    const newItems = cartItems.map(item => {
+      let result = item;
+      if (item._id === children?._id) {
+        result = {...item, count: item.count - 1};
+      }
+      return result;
+    }).filter(item => {
+      if (item.count === 0) return false;
+      return true;
+    });
+    const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+    setCartItems(newItems);
+    setAmountCart(amountItems);
+    addItemCart(newItems);
     setInStorage(false);
     setInStorageCount(0);
 
@@ -61,7 +90,27 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
       removeItemFromStorage();
       return;
     }
-    addItemCart(parsedChildren);
+    let exists = false;
+    const newItems = cartItems.map(item => {
+      let result = item;
+      if (item.title === children.title) {
+        exists = true;
+        result = {...item, count: item.count + 1};
+      }
+      return result;
+    });
+
+    if (!exists) {
+      const item = items.find(el => el.title === children.title);
+      if (item) {
+        newItems.push({...item, count: 1});
+      }
+    }
+
+    const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+    setCartItems(newItems);
+    setAmountCart(amountItems);
+    addItemCart(newItems);
     setInStorage(true);
   };
 
@@ -76,20 +125,43 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
     if (numberedValue > MAX_INPUT) {
       setInputValue(String(MAX_INPUT));
       setInStorageCount(MAX_INPUT);
-      setItemCartCount(parsedChildren, MAX_INPUT);
+      addItemCountFromInput(children , MAX_INPUT);
     } else if (numberedValue < MIN_INPUT && value !== '') {
       setInputValue(String(DEFAULT_INPUT));
       setInStorageCount(DEFAULT_INPUT);
-      setItemCartCount(parsedChildren, DEFAULT_INPUT);
+      addItemCountFromInput(children, DEFAULT_INPUT);
     } else if (value === '') {
       setInputValue(value);
       setInStorageCount(DEFAULT_INPUT);
-      setItemCartCount(parsedChildren, DEFAULT_INPUT);
+      addItemCountFromInput(children, DEFAULT_INPUT);
     } else {
       setInputValue(value);
       setInStorageCount(numberedValue);
-      setItemCartCount(parsedChildren, numberedValue);
+      addItemCountFromInput(children, numberedValue);
     }
+  };
+  const addItemCountFromInput = (storeItem: IStoreItem, inputCount: number) => {
+    let exists = false;
+    const newItems = cartItems.map(item => {
+      let result = item;
+      if (item.title === storeItem.title) {
+        exists = true;
+        result = {...item, count: inputCount};
+      }
+      return result;
+    });
+
+    if (!exists) {
+      const item = items.find(el => el.title === storeItem.title);
+      if (item) {
+        newItems.push({...item, count: inputCount});
+      }
+    }
+
+    const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+    setCartItems(newItems);
+    setAmountCart(amountItems);
+    addItemCart(newItems);
   };
 
   const handleIncreaseCount = (e: React.MouseEvent) => {
@@ -97,13 +169,25 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
     setInStorageCount((count) => {
       const newCount = count + 1;
       if (newCount <= MAX_INPUT) {
-        setItemCartCount(parsedChildren, newCount);
+        const newItems = cartItems.map(item => {
+          let result = item;
+          if (item._id === children?._id) {
+            result = {...item, count: item.count + 1};
+          }
+          return result;
+        });
+        const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+        setCartItems(newItems);
+        setAmountCart(amountItems);
+        addItemCart(newItems);
         setInputValue(String(newCount));
         return newCount;
       }
       setInputValue(String(count));
       return count;
     });
+  
+    
   };
 
   const handleDecreaseCount = (e: React.MouseEvent) => {
@@ -112,7 +196,20 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
       const newCount = count - 1;
       if (newCount > MIN_INPUT) {
         setInputValue(String(newCount));
-        setItemCartCount(parsedChildren, newCount);
+        const newItems = cartItems.map(item => {
+          let result = item;
+          if (item._id === children?._id) {
+            result = {...item, count: item.count - 1};
+          }
+          return result;
+        }).filter(item => {
+          if (item.count === 0) return false;
+          return true;
+        });
+        const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+        setCartItems(newItems);
+        setAmountCart(amountItems);
+        addItemCart(newItems);
         return newCount;
       }
       return removeItemFromStorage();
@@ -140,7 +237,7 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
             disabled={children?.hide}
           >
             {inStorage
-              ? 'В корзине'
+              ? 'Удалить'
               : children?.hide
                 ? 'Товара нет в наличии'
                 : 'Купить'}
