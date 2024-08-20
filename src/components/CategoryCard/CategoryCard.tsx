@@ -1,5 +1,6 @@
 import { FC, useEffect, useState, memo } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 interface ICategoryCard {
   title?: string;
   image?: string;
@@ -7,11 +8,13 @@ interface ICategoryCard {
   onClick?: () => void;
 }
 
+import { IStore } from 'src/interfaces/store.interface';
 import './CategoryCard.scss';
 
 const CategoryCard: FC<ICategoryCard> = ({ title, value, image, onClick }) => {
   const [isActive, setActive] = useState(false);
-  const [searchParams] = useSearchParams();
+  const curCategory = useSelector((state: IStore) => state.storeItemsReducer.curCategory);
+  const [searchParams] = useSearchParams(`category=${curCategory}`);
 
   useEffect(() => {
     if (searchParams.get('category') === value) {
