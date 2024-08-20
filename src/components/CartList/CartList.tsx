@@ -12,6 +12,15 @@ const CartList: FC = () => {
     (state: IStore) => state.storeItemsReducer.amountCart
   );
   const items = useSelector((state: IStore) => state.storeItemsReducer.cartItems);
+  const formattedPrice = Intl.NumberFormat('RU-ru', {
+    style: 'currency',
+    currency: 'RUB',
+    }).format(items.reduce((acc, element) => acc + element.price * element.count, 0));
+
+  function pluralize(num: number, titles: string[]) {
+    const suffix = titles[num % 10 === 1 && num % 100 !== 11 ? 0 : num % 10 >= 2 && num % 10 <= 4 && (num % 100 < 10 || num % 100 >= 20) ? 1 : 2];
+    return suffix;
+  }
   
   return (
     <div className='cart-list'>
@@ -23,12 +32,13 @@ const CartList: FC = () => {
             return <CartItem key={item.title}>{item}</CartItem>;
           })}
         </ul> : <p className='cart-list__null'>В корзине пока нет товаров</p>}
-      <div className="cart-list__result">
+      {amount && items ? <div className="cart-list__result">
         <div className="cart-list__sum">
-          
+          <div className="cart-list__sum-amount">Всего: {amount + ''} {pluralize(Number(amount), ['упаковка', 'упаковки', 'упаковок'])}</div>
+          <div className="cart-list__sum-price">Итого: {formattedPrice} </div>
         </div>
         <button className="cart-list__button">Оформить заказ</button>
-      </div> 
+      </div> : null} 
     </div>
   );
   
