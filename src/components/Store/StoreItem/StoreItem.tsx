@@ -39,8 +39,7 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
   const location = useLocation();
   const items = useSelector((state: IStore) => state.storeItemsReducer.items);
   const cartItems = useSelector((state: IStore) => state.storeItemsReducer.cartItems);
-  // const amount = useSelector((state: IStore) => state.storeItemsReducer.amountCart);
-  const formatedPrice = Intl.NumberFormat('RU-ru', {
+  const formattedPrice = Intl.NumberFormat('RU-ru', {
     style: 'currency',
     currency: 'RUB',
   }).format(Number(children?.price));
@@ -49,7 +48,7 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
     if (children) {
       setInStorage(isItemInCart(children?.title));
     }
-  }, [children]);
+  }, [children, cartItems]);
 
   useEffect(() => {
     let cartCount = 0;
@@ -243,7 +242,7 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
                 : 'Купить'}
           </button>
           <div className="store-item__money-container">
-            <span className="store-item__price">{formatedPrice}</span>
+            <span className="store-item__price">{formattedPrice}</span>
             {inStorage && (
               <CountButtons
                 value={inputValue}
