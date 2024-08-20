@@ -18,7 +18,7 @@ import {
 const initialState = {
   items: <IStoreItem[]>[],
   categories: <ICategories[]>[],
-  curCategory: 'all',
+  curCategory: 'Все',
   amountCart: getAmountCart() || 0,
   isItemsLoading: false,
   isCategoriesLoading: false,
