@@ -21,54 +21,14 @@ interface ICartItemProps {
 }
 
 const CartItem: FC<ICartItemProps> = ({ children }) => {
-  // const [count, setCount] = useState(children?.count || 0);
   const [inputValue, setInputValue] = useState(String(children?.count || 0));
   const {setAmountCart, setCartItems} = useDispatchedStoreActions();
   const cartItems = useSelector((state: IStore) => state.storeItemsReducer.cartItems);
-  // const amount = useSelector((state: IStore) => state.storeItemsReducer.amountCart);
   const location = useLocation();
   const formattedPrice = Intl.NumberFormat('RU-ru', {
     style: 'currency',
     currency: 'RUB',
   }).format(Number(children?.price) * Number(children?.count));
-
-  // const handleIncreaseCount = (e: React.MouseEvent) => {
-  //   e.preventDefault();
-  //   const newCount = count + 1;
-  //   setCount(count + 1);
-  //   const items = cartItems.map(item => {
-  //     let result = item;
-  //     if (item._id === children?._id) {
-  //       result = {...item, count: item.count + 1};
-  //     }
-  //     return result;
-  //   });
-  //   const amountItems = items.reduce((acc, element) => acc + element.count, 0);
-  //   setCartItems(items);
-  //   setAmountCart(amountItems);
-  //   addItemCart(items);
-  //   setInputValue(String(newCount));
-  // };
-
-  // const handleDecreaseCount = (e: React.MouseEvent) => {
-  //   e.preventDefault();
-  //   setCount(count-1);
-  //   const items = cartItems.map(item => {
-  //     let result = item;
-  //     if (item._id === children?._id) {
-  //       result = {...item, count: item.count - 1};
-  //     }
-  //     return result;
-  //   }).filter(item => {
-  //     if (item.count === 0) return false;
-  //     return true;
-  //   });
-  //   const amountItems = items.reduce((acc, element) => acc + element.count, 0);
-  //   setCartItems(items);
-  //   setAmountCart(amountItems);
-  //   addItemCart(items);
-  //   setInputValue(String(count));
-  // };
 
   const removeItemFromStorage = () => {
     const newItems = cartItems.map(item => {
