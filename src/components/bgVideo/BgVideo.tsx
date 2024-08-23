@@ -49,9 +49,9 @@ const BgVideo: FC = () => {
           <p className="bg-video__city shadow">Фейерверки Мурманск</p>
           <h2 className="bg-video__title shadow">Продажа<br/>проведение</h2>
           <p className="bg-video__description shadow">
-            Срочная доставка от 1 часа
+            Доставка от 1 часа
           </p>
-          <div className="bg-video__button-wrapper"><Link to={'/store'}><button className="bg-video__button">Заказать</button></Link></div>
+          <div className="bg-video__button-wrapper"><Link to={'/store'} draggable={false}><button className="bg-video__button">Заказать</button></Link></div>
         </div>
       </div>
     </div>
