@@ -6,12 +6,13 @@ interface ICategoryCard {
   image?: string;
   value?: string;
   onClick?: () => void;
+  active?: boolean;
 }
 
 import { IStore } from 'src/interfaces/store.interface';
 import './CategoryCard.scss';
 
-const CategoryCard: FC<ICategoryCard> = ({ title, value, image, onClick }) => {
+const CategoryCard: FC<ICategoryCard> = ({ title, value, image, onClick, active=true }) => {
   const [isActive, setActive] = useState(false);
   const curCategory = useSelector((state: IStore) => state.storeItemsReducer.curCategory);
   const [searchParams] = useSearchParams(`category=${curCategory}`);
@@ -26,7 +27,7 @@ const CategoryCard: FC<ICategoryCard> = ({ title, value, image, onClick }) => {
     <button
       className={`category-card ${isActive ? 'active' : ''}`}
       onClick={onClick}
-      disabled={isActive}
+      disabled={isActive && active}
     >
       {image && (
         <img

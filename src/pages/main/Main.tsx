@@ -1,7 +1,9 @@
 import { FC } from 'react';
 
+import MainContent from 'src/components/MainContent';
+
 const MainPage: FC = () => {
-  return <h1>Main</h1>;
+  return <MainContent />;
 };
 
 export default MainPage;
