@@ -9,15 +9,16 @@ interface ICountButtons {
   minus: React.MouseEventHandler;
   plus: React.MouseEventHandler;
   input: React.ChangeEventHandler;
+  cn?: boolean;
 }
 
-const CountButtons: FC<ICountButtons> = ({ value, minus, plus, input }) => {
+const CountButtons: FC<ICountButtons> = ({ value, minus, plus, input, cn = false }) => {
   const handleInputClick = (e: React.MouseEvent) => {
     e.preventDefault();
   };
 
   return (
-    <div className="count-buttons">
+    <div className={cn ? 'count-cart-buttons' : 'count-buttons'}>
       <button
         className="count-buttons__button count-buttons__button-decrease"
         onClick={minus}

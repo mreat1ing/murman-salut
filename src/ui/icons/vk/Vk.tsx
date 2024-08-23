@@ -7,7 +7,7 @@ const Vk: FC = () => {
   return (
     <a
       className="icon-vk"
-      href="https://vk.com"
+      href="https://vk.com/kolskysalut"
       target="_blank"
       rel="noopener noreferrer"
     >

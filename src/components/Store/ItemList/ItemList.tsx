@@ -8,9 +8,6 @@ import { fullStorageClear } from 'src/utils/localStore.utils';
 import './ItemList.scss';
 
 const ItemList: FC = () => {
-  const isItemsLoading = useSelector(
-    (state: IStore) => state.storeItemsReducer.isItemsLoading
-  );
   const items = useSelector((state: IStore) => state.storeItemsReducer.items);
 
   // //TODO: replace with spinner or smth like that

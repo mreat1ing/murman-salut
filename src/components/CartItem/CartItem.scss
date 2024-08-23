@@ -1,0 +1,22 @@
+.store-item__remove-button {
+  border: none;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+.cart-item__price {
+  font-size: 20px;
+}
+.cart-item__money-container {
+  display: flex;
+  width: 9rem;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-direction: row-reverse;
+  }
+.cart-item__buy-container {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  min-width: 9rem;
+}

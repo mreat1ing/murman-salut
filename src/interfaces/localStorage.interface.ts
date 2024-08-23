@@ -1,3 +1,5 @@
+import { ICartItem } from './cartItem.interface';
+
 export interface ILocalStorageItem {
   item: string;
   count: number;
@@ -10,4 +12,9 @@ export interface ILocalStorageCart {
 
 export interface ILocalStorage {
   cart: ILocalStorageCart;
+}
+
+export interface ILocalS {
+  items: ICartItem[],
+  amount: number,
 }

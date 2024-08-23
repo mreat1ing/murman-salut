@@ -44,6 +44,17 @@
   animation: showBlock 0.5s linear forwards;
 }
 
+.header__cart-list-items {
+  padding: 0;
+  margin: 0;
+}
+
+.header__cart__sum {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
 .header__cart-list.hide {
   animation: removeBlock 0.5s linear forwards;
 }

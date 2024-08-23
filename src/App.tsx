@@ -14,6 +14,7 @@ import Store from './pages/store';
 import About from './pages/about';
 import Card from './pages/card';
 import MainPage from './pages/main';
+import CartPage from './pages/cart';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,7 +23,7 @@ const router = createBrowserRouter(
       <Route path="/store" element={<Store />} />
       <Route path="/store/:id" element={<Card />} />
       <Route path="/about" element={<About />} />
-      <Route path="/cart" element={<h1>Корзина</h1>} />
+      <Route path="/cart" element={<CartPage />} />
     </Route>
   )
 );
