@@ -3,9 +3,7 @@ import { FC } from 'react';
 import CartList from 'src/components/CartList';
 
 const CartPage: FC = () => {
-  return (
-    <CartList />
-  ); 
+  return <CartList />;
 };
 
 export default CartPage;

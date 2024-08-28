@@ -34,11 +34,13 @@ interface IStoreItemProps {
 const StoreItem: FC<IStoreItemProps> = ({ children }) => {
   const [inStorage, setInStorage] = useState(false);
   const [inStorageCount, setInStorageCount] = useState(0);
-  const {setAmountCart, setCartItems} = useDispatchedStoreActions();
+  const { setAmountCart, setCartItems } = useDispatchedStoreActions();
   const [inputValue, setInputValue] = useState(String(inStorageCount));
   const location = useLocation();
   const items = useSelector((state: IStore) => state.storeItemsReducer.items);
-  const cartItems = useSelector((state: IStore) => state.storeItemsReducer.cartItems);
+  const cartItems = useSelector(
+    (state: IStore) => state.storeItemsReducer.cartItems
+  );
   const formattedPrice = Intl.NumberFormat('RU-ru', {
     style: 'currency',
     currency: 'RUB',
@@ -55,7 +57,7 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
     if (children) {
       cartCount = getItemCartCount(children?.title);
     }
-    
+
     setInStorageCount(cartCount);
     setInputValue(String(cartCount));
   }, [inStorage, children]);
@@ -63,17 +65,22 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
   if (!children) return <li className="store-item"></li>;
 
   const removeItemFromStorage = () => {
-    const newItems = cartItems.map(item => {
-      let result = item;
-      if (item._id === children?._id) {
-        result = {...item, count: item.count - 1};
-      }
-      return result;
-    }).filter(item => {
-      if (item.count === 0) return false;
-      return true;
-    });
-    const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+    const newItems = cartItems
+      .map((item) => {
+        let result = item;
+        if (item._id === children?._id) {
+          result = { ...item, count: item.count - 1 };
+        }
+        return result;
+      })
+      .filter((item) => {
+        if (item.count === 0) return false;
+        return true;
+      });
+    const amountItems = newItems.reduce(
+      (acc, element) => acc + element.count,
+      0
+    );
     setCartItems(newItems);
     setAmountCart(amountItems);
     addItemCart(newItems);
@@ -90,23 +97,26 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
       return;
     }
     let exists = false;
-    const newItems = cartItems.map(item => {
+    const newItems = cartItems.map((item) => {
       let result = item;
       if (item.title === children.title) {
         exists = true;
-        result = {...item, count: item.count + 1};
+        result = { ...item, count: item.count + 1 };
       }
       return result;
     });
 
     if (!exists) {
-      const item = items.find(el => el.title === children.title);
+      const item = items.find((el) => el.title === children.title);
       if (item) {
-        newItems.push({...item, count: 1});
+        newItems.push({ ...item, count: 1 });
       }
     }
 
-    const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+    const amountItems = newItems.reduce(
+      (acc, element) => acc + element.count,
+      0
+    );
     setCartItems(newItems);
     setAmountCart(amountItems);
     addItemCart(newItems);
@@ -124,7 +134,7 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
     if (numberedValue > MAX_INPUT) {
       setInputValue(String(MAX_INPUT));
       setInStorageCount(MAX_INPUT);
-      addItemCountFromInput(children , MAX_INPUT);
+      addItemCountFromInput(children, MAX_INPUT);
     } else if (numberedValue < MIN_INPUT && value !== '') {
       setInputValue(String(DEFAULT_INPUT));
       setInStorageCount(DEFAULT_INPUT);
@@ -141,23 +151,26 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
   };
   const addItemCountFromInput = (storeItem: IStoreItem, inputCount: number) => {
     let exists = false;
-    const newItems = cartItems.map(item => {
+    const newItems = cartItems.map((item) => {
       let result = item;
       if (item.title === storeItem.title) {
         exists = true;
-        result = {...item, count: inputCount};
+        result = { ...item, count: inputCount };
       }
       return result;
     });
 
     if (!exists) {
-      const item = items.find(el => el.title === storeItem.title);
+      const item = items.find((el) => el.title === storeItem.title);
       if (item) {
-        newItems.push({...item, count: inputCount});
+        newItems.push({ ...item, count: inputCount });
       }
     }
 
-    const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+    const amountItems = newItems.reduce(
+      (acc, element) => acc + element.count,
+      0
+    );
     setCartItems(newItems);
     setAmountCart(amountItems);
     addItemCart(newItems);
@@ -168,14 +181,17 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
     setInStorageCount((count) => {
       const newCount = count + 1;
       if (newCount <= MAX_INPUT) {
-        const newItems = cartItems.map(item => {
+        const newItems = cartItems.map((item) => {
           let result = item;
           if (item._id === children?._id) {
-            result = {...item, count: item.count + 1};
+            result = { ...item, count: item.count + 1 };
           }
           return result;
         });
-        const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+        const amountItems = newItems.reduce(
+          (acc, element) => acc + element.count,
+          0
+        );
         setCartItems(newItems);
         setAmountCart(amountItems);
         addItemCart(newItems);
@@ -185,8 +201,6 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
       setInputValue(String(count));
       return count;
     });
-  
-    
   };
 
   const handleDecreaseCount = (e: React.MouseEvent) => {
@@ -195,17 +209,22 @@ const StoreItem: FC<IStoreItemProps> = ({ children }) => {
       const newCount = count - 1;
       if (newCount > MIN_INPUT) {
         setInputValue(String(newCount));
-        const newItems = cartItems.map(item => {
-          let result = item;
-          if (item._id === children?._id) {
-            result = {...item, count: item.count - 1};
-          }
-          return result;
-        }).filter(item => {
-          if (item.count === 0) return false;
-          return true;
-        });
-        const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+        const newItems = cartItems
+          .map((item) => {
+            let result = item;
+            if (item._id === children?._id) {
+              result = { ...item, count: item.count - 1 };
+            }
+            return result;
+          })
+          .filter((item) => {
+            if (item.count === 0) return false;
+            return true;
+          });
+        const amountItems = newItems.reduce(
+          (acc, element) => acc + element.count,
+          0
+        );
         setCartItems(newItems);
         setAmountCart(amountItems);
         addItemCart(newItems);

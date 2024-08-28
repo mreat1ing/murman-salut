@@ -12,7 +12,13 @@ interface ICountButtons {
   cn?: boolean;
 }
 
-const CountButtons: FC<ICountButtons> = ({ value, minus, plus, input, cn = false }) => {
+const CountButtons: FC<ICountButtons> = ({
+  value,
+  minus,
+  plus,
+  input,
+  cn = false,
+}) => {
   const handleInputClick = (e: React.MouseEvent) => {
     e.preventDefault();
   };

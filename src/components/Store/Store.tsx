@@ -22,8 +22,12 @@ const Store: FC = () => {
     (state: IStore) => state.storeItemsReducer.isCategoriesLoading
   );
   const items = useSelector((state: IStore) => state.storeItemsReducer.items);
-  const curCategory = useSelector((state: IStore) => state.storeItemsReducer.curCategory);
-  const [searchParams, setSearchParams] = useSearchParams(`category=${curCategory}`);
+  const curCategory = useSelector(
+    (state: IStore) => state.storeItemsReducer.curCategory
+  );
+  const [searchParams, setSearchParams] = useSearchParams(
+    `category=${curCategory}`
+  );
 
   useEffect(() => {
     if (!categories.length) return;

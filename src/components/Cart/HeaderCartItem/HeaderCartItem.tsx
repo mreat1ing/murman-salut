@@ -16,8 +16,10 @@ interface IHeaderCartItemProps {
 }
 
 const HeaderCartItem: FC<IHeaderCartItemProps> = ({ children, setActive }) => {
-  const {setAmountCart, setCartItems} = useDispatchedStoreActions();
-  const cartItems = useSelector((state: IStore) => state.storeItemsReducer.cartItems);
+  const { setAmountCart, setCartItems } = useDispatchedStoreActions();
+  const cartItems = useSelector(
+    (state: IStore) => state.storeItemsReducer.cartItems
+  );
   const location = useLocation();
   const formattedPrice = Intl.NumberFormat('RU-ru', {
     style: 'currency',
@@ -26,11 +28,14 @@ const HeaderCartItem: FC<IHeaderCartItemProps> = ({ children, setActive }) => {
 
   const removeItemFromCart = (e: React.MouseEvent) => {
     e.preventDefault();
-    const newItems = cartItems.filter(item => {
+    const newItems = cartItems.filter((item) => {
       if (item.title === children?.title) return false;
       return true;
     });
-    const amountItems = newItems.reduce((acc, element) => acc + element.count, 0);
+    const amountItems = newItems.reduce(
+      (acc, element) => acc + element.count,
+      0
+    );
     setCartItems(newItems);
     setAmountCart(amountItems);
     addItemCart(newItems);
@@ -53,16 +58,16 @@ const HeaderCartItem: FC<IHeaderCartItemProps> = ({ children, setActive }) => {
         </div>
         <div className="header-cart-item__buy-container">
           <div className="header-cart-item__money-container">
-            <span className='header-cart-item__count'>{children?.count}x</span>
-            <button 
+            <span className="header-cart-item__count">{children?.count}x</span>
+            <button
               onClick={removeItemFromCart}
-              className='header-cart-item__remove-button'>
+              className="header-cart-item__remove-button"
+            >
               <Treshold />
-            </button> 
-            </div>
+            </button>
+          </div>
           <div className="header-cart-item__money-container">
             <span className="header-cart-item__price">{formattedPrice}</span>
-            
           </div>
         </div>
       </li>
