@@ -39,12 +39,24 @@
   cursor: pointer;
   transition: 0.3s ease-in;
   outline: 1px solid rgb(107, 107, 107);
+  animation: animate_reduce 2s infinite;
 }
 .cart-list__button:hover {
-  scale: 1.07;
+  background-color: #e2bc00;
   outline: 1px solid black;
+  animation: none;
 }
 .cart-list__button:active {
   background-color: #e2bc00;
-  scale: 1.07;
+}
+@keyframes animate_reduce {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    transform: scale3d(0.95, 0.95, 0.95);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
 }
