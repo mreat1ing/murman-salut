@@ -1,12 +1,10 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import ModalContainer from 'src/modals/ModalContainer';
 import {
   updateFormItems,
   getItems,
-  fullSessionStorageClear,
-  getEdited,
 } from 'src/utils/sessionStorage.utils';
 
 import './OrderModal.scss';
