@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import videoBg from 'src/assets/video/fireworksBg.mp4';
+import videoBg from 'src/assets/video/fireworkBg111.mp4';
 
 import './BgVideo.scss';
 
@@ -25,7 +25,7 @@ const BgVideo: FC = () => {
       document.querySelector('.bg-video__video');
 
     try {
-      setTimeout(() => video?.play(), 0);
+      setTimeout(() => video?.play(), 1000);
     } catch (error) {
       return;
     }
@@ -47,11 +47,17 @@ const BgVideo: FC = () => {
       <div className="bg-video__text-wrapper">
         <div className="bg-video__content">
           <p className="bg-video__city shadow">Фейерверки Мурманск</p>
-          <h2 className="bg-video__title shadow">Продажа<br/>проведение</h2>
-          <p className="bg-video__description shadow">
-            Доставка от 1 часа
-          </p>
-          <div className="bg-video__button-wrapper"><Link to={'/store'} draggable={false}><button className="bg-video__button">Заказать</button></Link></div>
+          <h2 className="bg-video__title shadow">
+            Продажа
+            <br />
+            проведение
+          </h2>
+          <p className="bg-video__description shadow">Доставка от 1 часа</p>
+          <div className="bg-video__button-wrapper">
+            <Link to={'/store'} draggable={false}>
+              <button className="bg-video__button">Заказать</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
