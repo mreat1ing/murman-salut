@@ -29,16 +29,22 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const { setCategories, setCategoriesLoading } = useDispatchedStoreActions();
+  const { setCategories, setCategoriesLoading, setItems, setItemsLoading } =
+    useDispatchedStoreActions();
 
   useEffect(() => {
+    const items = db.loadItems();
+    setItemsLoading(true);
     const categories = db.loadCats();
     setCategoriesLoading(true);
-    categories.then((res) => {
-      setCategories(res);
+    Promise.all([items, categories]).then((p) => {
+      setItems(p[0]);
+      setCategories(p[1]);
+      setItemsLoading(false);
       setCategoriesLoading(false);
     });
-  }, [setCategories, setCategoriesLoading]);
+    
+  }, [setCategories, setCategoriesLoading, setItems, setItemsLoading]);
   return <RouterProvider router={router} />;
 }
 
