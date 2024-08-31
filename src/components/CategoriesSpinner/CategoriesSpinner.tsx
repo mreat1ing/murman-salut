@@ -25,7 +25,7 @@ const CategoriesSpinner: FC = () => {
               if (item.title === 'Все')
                 return (
                   <li key={item.value}>
-                    <Link to={'/store'}>
+                    <Link to={`/store?category=${item.title}`}>
                       <CategoryCard
                         title={item.title}
                         value={item.title}
