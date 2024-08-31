@@ -9,8 +9,6 @@ const updateFormItems = (item: ISessionStorageItem) => {
   sessionStorage.removeItem('form');
   const data = JSON.stringify({ items: item.items, edited: 1 });
   sessionStorage.setItem('form', data);
-  // eslint-disable-next-line no-console
-  console.log(data);
 };
 
 const getDataById = (key: string) => {
