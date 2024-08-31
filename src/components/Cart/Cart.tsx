@@ -1,4 +1,4 @@
-import { FC, useRef, useState, memo } from 'react';
+import { FC, useRef, useState, useEffect, memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ import HeaderCartItem from './HeaderCartItem';
 const Cart: FC = () => {
   const timer = useRef<NodeJS.Timeout>();
   const [isCartHover, setCartHover] = useState<boolean>(false);
+  const [navType, setNavType] = useState<string>('default');
   const items = useSelector(
     (state: IStore) => state.storeItemsReducer.cartItems
   );
@@ -27,6 +28,19 @@ const Cart: FC = () => {
       items.reduce((acc, element) => acc + element.count * element.price, 0)
     )
   );
+  const onResize = () => {
+    if (window.innerWidth < 900) {
+      setNavType('burger');
+    } else {
+      setNavType('default');
+    }
+  };
+  useEffect(() => {
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   function pluralize(num: number, titles: string[]) {
     const suffix =
       titles[
@@ -42,6 +56,7 @@ const Cart: FC = () => {
   }
 
   const hoverHandler = (value: boolean) => {
+    if (navType === 'burger') return;
     if (items.length < 1) setCartHover(false);
     if (items.length < 1) return;
     clearTimeout(timer.current);
