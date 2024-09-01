@@ -43,35 +43,44 @@ const HeaderCartItem: FC<IHeaderCartItemProps> = ({ children, setActive }) => {
   };
 
   return (
-    <Link to={`/store/${children?.title}`} state={{ from: location }}>
-      <li className="header-cart-item">
-        <img
-          className="header-cart-item__image"
-          src={placeholder}
-          alt="placeholder"
-        />
-        <div className="header-cart-item__info">
+    <li className="header-cart-item">
+      <img
+        className="header-cart-item__image"
+        src={
+          `https://murman-salut.ru/salut-catalog-icons/${children?.title.replace(/("+)|(;+)|(:+)/g, '')}.webp` ||
+          placeholder
+        }
+        alt="placeholder"
+      />
+      <div className="header-cart-item__info">
+        <Link to={`/store/${children?.title}`} state={{ from: location }}>
           <h3 className="header-cart-item__title">{children?.title}</h3>
+        </Link>
+        {children && children.title.length > 30 ? (
           <div className="header-cart-item__description">
             <span>Количество в упаковке: {children?.value}</span>
           </div>
-        </div>
-        <div className="header-cart-item__buy-container">
-          <div className="header-cart-item__money-container">
-            <span className="header-cart-item__count">{children?.count}x</span>
-            <button
-              onClick={removeItemFromCart}
-              className="header-cart-item__remove-button"
-            >
-              <Treshold />
-            </button>
+        ) : (
+          <div className="header-cart-item__description--short">
+            <span>Количество в упаковке: {children?.value}</span>
           </div>
-          <div className="header-cart-item__money-container">
-            <span className="header-cart-item__price">{formattedPrice}</span>
-          </div>
+        )}
+      </div>
+      <div className="header-cart-item__buy-container">
+        <div className="header-cart-item__money-container">
+          <span className="header-cart-item__count">{children?.count}x</span>
+          <button
+            onClick={removeItemFromCart}
+            className="header-cart-item__remove-button"
+          >
+            <Treshold />
+          </button>
         </div>
-      </li>
-    </Link>
+        <div className="header-cart-item__money-container">
+          <span className="header-cart-item__price">{formattedPrice}</span>
+        </div>
+      </div>
+    </li>
   );
 };
 
