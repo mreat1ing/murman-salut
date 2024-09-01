@@ -33,6 +33,7 @@ const BgVideo: FC = () => {
 
   return (
     <div className="bg-video">
+      <div className="bg-video__overlay" />
       <div className="bg-video__video-wrapper">
         <video
           className="bg-video__video"
