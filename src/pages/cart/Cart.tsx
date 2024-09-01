@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import CartList from 'src/components/CartList';
+import CartList from 'src/components/CartContainer';
 
 const CartPage: FC = () => {
   return <CartList />;
