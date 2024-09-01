@@ -16,7 +16,7 @@
 
 .product-card__media-container.image,
 .product-card__media-container.video {
-  height: auto;
+  height: 480px;
 }
 
 .product-card__video,
@@ -74,4 +74,27 @@
 
 .product-card__button-back:hover {
   color: white;
+}
+@media (max-width: 700px) {
+  .product-card {
+    margin: auto auto 5rem auto;
+    width: 320px;
+    min-height: 320px;
+  }
+  .product-card__media-container.image,
+  .product-card__media-container.video {
+    height: 320px;
+   img {
+    width: 320px;
+   }
+   video {
+    width: 320px;
+   }
+}
+}
+@media (max-width: 500px) {
+  .product-card__button-back {
+    right: -280px;
+    top: 30px;
+  }
 }
