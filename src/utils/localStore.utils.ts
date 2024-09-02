@@ -19,7 +19,7 @@ const getCartItems = () => {
   const parsedCartData = parseCart();
   const parsedItems = parsedCartData.items.map((el) => {
     const item = JSON.parse(el.item);
-    return {...item, count: el.count};
+    return { ...item, count: el.count };
   });
   return parsedItems;
 };

@@ -4,17 +4,16 @@ import { ILocalS } from 'src/interfaces/localStorage.interface';
 const initialCart = JSON.stringify({ items: [], amount: 0 });
 
 const getDataById = (key: string) => {
-
-    return localStorage.getItem(key);
+  return localStorage.getItem(key);
 };
 
 const parseCart = (): ILocalS => {
-    const prevCartData = getDataById('cart') || initialCart;
-    return JSON.parse(prevCartData);
-};  
+  const prevCartData = getDataById('cart') || initialCart;
+  return JSON.parse(prevCartData);
+};
 
 const fullStorageClear = () => {
-    localStorage.clear();
+  localStorage.clear();
 };
 
 const getCartItems = () => {
@@ -25,8 +24,8 @@ const getCartItems = () => {
 const addItemCart = (items: ICartItem[]) => {
   localStorage.removeItem('cart');
   let amount = 0;
-  items.forEach((item) => amount += item.count);
-  const data = JSON.stringify({items: items, amount: amount});
+  items.forEach((item) => (amount += item.count));
+  const data = JSON.stringify({ items: items, amount: amount });
   localStorage.setItem('cart', data);
 };
 
@@ -38,7 +37,9 @@ const getAmountCart = () => {
 const getItemCartCount = (title: string) => {
   const parsedCart = parseCart();
   let currentElement = 0;
-  parsedCart.items.forEach((el) => {if (el.title === title) currentElement = el.count;});
+  parsedCart.items.forEach((el) => {
+    if (el.title === title) currentElement = el.count;
+  });
   return currentElement;
 };
 
@@ -51,13 +52,11 @@ const isItemInCart = (title: string): boolean => {
   return res;
 };
 
-  export {
-    getCartItems,
-    fullStorageClear,
-    isItemInCart,
-    //removeItemCart,
-    addItemCart,
-    getItemCartCount,
-    //setItemCartCount,
-    getAmountCart,
-  };  
+export {
+  getCartItems,
+  fullStorageClear,
+  isItemInCart,
+  addItemCart,
+  getItemCartCount,
+  getAmountCart,
+};

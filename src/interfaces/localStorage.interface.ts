@@ -15,6 +15,6 @@ export interface ILocalStorage {
 }
 
 export interface ILocalS {
-  items: ICartItem[],
-  amount: number,
+  items: ICartItem[];
+  amount: number;
 }

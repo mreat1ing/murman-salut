@@ -12,9 +12,17 @@ interface ICategoryCard {
 import { IStore } from 'src/interfaces/store.interface';
 import './CategoryCard.scss';
 
-const CategoryCard: FC<ICategoryCard> = ({ title, value, image, onClick, active=true }) => {
+const CategoryCard: FC<ICategoryCard> = ({
+  title,
+  value,
+  image,
+  onClick,
+  active = true,
+}) => {
   const [isActive, setActive] = useState(false);
-  const curCategory = useSelector((state: IStore) => state.storeItemsReducer.curCategory);
+  const curCategory = useSelector(
+    (state: IStore) => state.storeItemsReducer.curCategory
+  );
   const [searchParams] = useSearchParams(`category=${curCategory}`);
 
   useEffect(() => {
