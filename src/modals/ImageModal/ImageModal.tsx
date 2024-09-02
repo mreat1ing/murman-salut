@@ -6,7 +6,7 @@ import ModalContainer from '../ModalContainer';
 import './ImageModal.scss';
 
 interface IImageModal {
-  src: string | any;
+  src: string;
   alt: string;
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
 }

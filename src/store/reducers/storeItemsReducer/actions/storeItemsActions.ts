@@ -9,6 +9,7 @@ import {
   SET_CATEGORIES_LOADING,
   SET_CATEGORIES,
   SET_CART_ITEMS,
+  SET_CURR_CATEGORY,
 } from '../constants';
 
 export const addItem = (item: IStoreItem) => {
@@ -37,4 +38,8 @@ export const setCategories = (value: ICategories[]) => {
 
 export const setCartItems = (items: IStoreItem[]) => {
   return { type: SET_CART_ITEMS, payload: items };
+};
+
+export const setCurrCategory = (value: string) => {
+  return { type: SET_CURR_CATEGORY, payload: value };
 };
