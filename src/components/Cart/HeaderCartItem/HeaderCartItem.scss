@@ -2,8 +2,8 @@
   font-size: 12px;
   display: flex;
   align-items: center;
-  background-color: #f3f3f3;
-  border-radius: 1rem;
+  background-color: white;
+  border-radius: 0 1rem 1rem 0;
   margin-bottom: 16px;
   height: 4rem;
   margin: 1rem;
@@ -32,6 +32,11 @@
 }
 
 .header-cart-item__description {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+.header-cart-item__description--short {
   margin-top: 16px;
   display: flex;
   flex-direction: column;
@@ -46,7 +51,7 @@
   font-size: 20px;
 }
 .header-cart-item__count {
-  font-size: 20px;
+  font-size: 18px;
 }
 .header-cart-item__money-container {
   display: flex;
@@ -62,4 +67,7 @@
   flex-direction: column-reverse;
   align-items: center;
   min-width: 9rem;
+}
+.header-cart-item:hover {
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
 }

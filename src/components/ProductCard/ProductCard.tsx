@@ -48,7 +48,10 @@ const ProductCard: FC = () => {
         {previewType === 'image' && (
           <img
             className="product-card__image"
-            src={placeholder}
+            src={
+              `https://murman-salut.ru/salut-catalog-icons/${item?.title.replace(/("+)|(;+)|(:+)/g, '')}.webp` ||
+              placeholder
+            }
             alt="placeholder"
           />
         )}
