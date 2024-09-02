@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 
 import { ISingleChildren } from 'src/interfaces/singleChildren.interface';
 
@@ -17,17 +17,17 @@ const ModalContainer: FC<IModalContainer> = ({ children, onClose }) => {
     return () => bodyElement?.classList.remove('modal-open');
   }, []);
 
-  const handleCloseButton = (e: KeyboardEvent) => {
+  const handleCloseButton = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       onClose(false);
     }
-  };
+  },[onClose]);
 
   useEffect(() => {
     window.addEventListener('keyup', handleCloseButton);
 
     return () => removeEventListener('keyup', handleCloseButton);
-  }, []);
+  }, [handleCloseButton]);
 
   return (
     <div className="modal-wrapper" onClick={() => onClose(false)}>

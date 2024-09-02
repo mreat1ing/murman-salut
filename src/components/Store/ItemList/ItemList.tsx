@@ -1,14 +1,17 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
 
-import { IStore } from 'src/interfaces/store.interface';
 import StoreItem from 'src/components/Store/StoreItem';
 import { fullStorageClear } from 'src/utils/localStore.utils';
+import { IStoreItem } from 'src/interfaces/storeItem.interface';
 
 import './ItemList.scss';
 
-const ItemList: FC = () => {
-  const items = useSelector((state: IStore) => state.storeItemsReducer.items);
+interface IItemListProps {
+  items: IStoreItem[];
+}
+
+const ItemList: FC<IItemListProps> = ({items}) => {
+  
 
   // //TODO: replace with spinner or smth like that
   // if (isItemsLoading) return <h2>LOADING</h2>;

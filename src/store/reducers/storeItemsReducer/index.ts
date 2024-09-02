@@ -13,6 +13,7 @@ import {
   SET_CATEGORIES_LOADING,
   SET_CATEGORIES,
   SET_CART_ITEMS,
+  SET_CURR_CATEGORY,
 } from './constants';
 
 const initialState = {
@@ -44,6 +45,8 @@ export const storeItemsReducer = (
       return { ...state, categories: action.payload };
     case SET_CART_ITEMS:
       return { ...state, cartItems: action.payload };
+    case SET_CURR_CATEGORY: 
+      return { ...state, curCategory: action.payload };
     default:
       return state;
   }
