@@ -1,0 +1,15 @@
+{
+  "extends": "@parcel/config-default",
+  "transformers": {
+    "tsx:*.svg": [
+      "...",
+      "@parcel/transformer-svg-react"
+    ],
+    "tsx:*": [
+      "..."
+    ],
+    "*.mp4": [
+      "@parcel/transformer-raw"
+    ]
+  }
+}
