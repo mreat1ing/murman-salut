@@ -75,6 +75,10 @@
 .product-card__button-back:hover {
   color: white;
 }
+.product-card__buy-button {
+  margin-left: 65%;
+}
+
 @media (max-width: 700px) {
   .product-card {
     margin: auto auto 5rem auto;
@@ -90,6 +94,9 @@
    video {
     width: 320px;
    }
+}
+.product-card__buy-button {
+  margin-left: auto;
 }
 }
 @media (max-width: 500px) {
