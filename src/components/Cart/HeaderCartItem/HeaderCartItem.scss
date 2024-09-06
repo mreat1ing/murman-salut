@@ -3,12 +3,14 @@
   display: flex;
   align-items: center;
   background-color: white;
-  border-radius: 0 1rem 1rem 0;
+  border-radius: 1rem 1rem 1rem 1rem;
   margin-bottom: 16px;
   height: 4rem;
   margin: 1rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   transition: background-color 0.1s ease;
+  padding: 16px;
+  box-sizing: content-box;
 }
 
 .header-cart-item__image {
@@ -29,6 +31,7 @@
 .header-cart-item__title {
   font-size: 16px;
   margin: 0;
+  color: black
 }
 
 .header-cart-item__description {
