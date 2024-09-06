@@ -7,6 +7,7 @@ import './CountButtons.scss';
 interface ICountButtons {
   value: number | string;
   minus: React.MouseEventHandler;
+  blur: React.FocusEventHandler;
   plus: React.MouseEventHandler;
   input: React.ChangeEventHandler;
   cn?: boolean;
@@ -18,6 +19,7 @@ const CountButtons: FC<ICountButtons> = ({
   plus,
   input,
   cn = false,
+  blur,
 }) => {
   const handleInputClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ const CountButtons: FC<ICountButtons> = ({
         <i className="count-buttons__icon" />
       </button>
       <input
+        onBlur={value === '' ? blur : () => {}}
         className="count-buttons__input"
         onClick={handleInputClick}
         onChange={input}
