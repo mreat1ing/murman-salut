@@ -9,6 +9,7 @@ import { db } from 'src/services/db';
 import { IStore } from 'src/interfaces/store.interface';
 import { iconFilter } from 'src/ui/icons/categoryIcons/CategoryIcons';
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
+import Select from 'src/ui/Select';
 
 import ItemList from '../../components/Store/ItemList';
 
@@ -17,7 +18,6 @@ import './Store.scss';
 const Store: FC = () => {
   const [categoriesList, setCategoriesList] = useState<React.ReactElement[]>();
   const { setItems, setItemsLoading } = useDispatchedStoreActions();
-  const [sort, setSort] = useState('Сортировка');
   const categories = useSelector(
     (state: IStore) => state.storeItemsReducer.categories
   );
@@ -34,8 +34,13 @@ const Store: FC = () => {
   const [listItems, setListItems] = useState(items);
 
   useEffect(() => {
-    setSort('Сортировка');
-  }, [searchParams]);
+    const copyItems = listItems;
+    if (searchParams.get('sort') === 'min') {
+      setListItems(copyItems.sort((a, b) => a.price - b.price));
+    } else if (searchParams.get('sort') === 'max') {
+      setListItems(copyItems.sort((a, b) => a.price - b.price).reverse());
+    }
+  }, [searchParams, listItems]);
 
   useEffect(() => {
     if (!categories.length) return;
@@ -95,12 +100,12 @@ const Store: FC = () => {
   }, [filterItems, items]);
 
   const sortItems = (val: string) => {
-    setSort(val);
-    const copyItems = listItems;
-    if (val === 'min') {
-      setListItems(copyItems.sort((a, b) => a.price - b.price));
-    } else if (val === 'max') {
-      setListItems(copyItems.sort((a, b) => a.price - b.price).reverse());
+    if (!searchParams.get('sort')) {
+      setSearchParams(searchParams + '&' + `sort=${val}`);
+    } else {
+      setSearchParams(
+        `category=${searchParams.get('category')}` + '&' + `sort=${val}`
+      );
     }
   };
 
@@ -114,16 +119,30 @@ const Store: FC = () => {
         <div className="store">
           <div className="store__header">
             <h2 className="store__title">{searchParams.get('category')}</h2>
-            <select onChange={(e) => sortItems(e.target.value)} value={sort}>
-              <option value="Сортировка" disabled hidden>
-                Сортировка
-              </option>
-              <option value={'min'}>Сначала недорогие</option>
-              <option value={'max'}>Сначала дорогие</option>
-            </select>
+            <Select
+              title={'Сортировка'}
+              options={[
+                { title: 'Сначала недорогие', id: 'first', value: 'min' },
+                { title: 'Сначала дорогие', id: 'second', value: 'max' },
+              ]}
+              onChange={(value) => {
+                sortItems(value);
+              }}
+              currCategory={curCategory}
+            />
           </div>
 
-          {listItems && items && sort && <ItemList items={listItems} />}
+          {listItems && items && (
+            <ItemList
+              items={
+                searchParams.get('sort') === 'min'
+                  ? listItems.sort((a, b) => a.price - b.price)
+                  : searchParams.get('sort') === 'max'
+                    ? listItems.sort((a, b) => a.price - b.price).reverse()
+                    : listItems
+              }
+            />
+          )}
         </div>
       ) : null}
     </div>
