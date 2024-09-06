@@ -174,17 +174,43 @@ const CartItem: FC<ICartItemProps> = ({ children }) => {
     setAmountCart(amountItems);
     addItemCart(newItems);
   };
+  const onBlurHandler = (e: React.FocusEvent) => {
+    e.preventDefault();
+    const newItems = cartItems
+      .map((item) => {
+        let result = item;
+        if (item._id === children?._id) {
+          result = { ...item, count: item.count - 1 };
+        }
+        return result;
+      })
+      .filter((item) => {
+        if (item.count <= 0) return false;
+        return true;
+      });
+    const amountItems = newItems.reduce(
+      (acc, element) => acc + element.count,
+      0
+    );
+    setCartItems(newItems);
+    setAmountCart(amountItems);
+    addItemCart(newItems);
+  };
+
 
   return (
     <li className="store-item">
-      <img
-        className="store-item__image"
-        src={
-          `https://murman-salut.ru/salut-catalog-icons/${children?.title.replace(/("+)|(;+)|(:+)/g, '')}.webp` ||
-          placeholder
-        }
-        alt="placeholder"
-      />
+      <Link to={`/store/${children?.title}`} state={{ from: location }}>
+        <img
+          className="store-item__image"
+          src={
+            `https://murman-salut.ru/salut-catalog-icons/${children?.title.replace(/("+)|(;+)|(:+)/g, '')}.webp` ||
+            placeholder
+          }
+          alt="placeholder"
+        />
+      </Link>
+
       {mobile === 'default' ? (
         <div className="store-item__info-wrapper">
           <div className="store-item__info">
@@ -203,6 +229,7 @@ const CartItem: FC<ICartItemProps> = ({ children }) => {
                 minus={handleDecreaseCount}
                 input={handleChangeCount}
                 cn={true}
+                blur={onBlurHandler}
               />
               <button
                 onClick={removeItemFromCart}
@@ -224,30 +251,27 @@ const CartItem: FC<ICartItemProps> = ({ children }) => {
             </Link>
           </div>
           <div className="cart-item__buy-container">
-            <div className="store-item__about">
-              <div className="store-item__description">
-                <span>Количество в упаковке: {children?.value}</span>
-              </div>
-              <div className="cart-item__price-container">
-                <span className="cart-item__price">{formattedPrice}</span>
-                <button
+            <div className="store-item__description">
+              <span>Количество в упаковке: {children?.value}</span>
+            </div>
+            <div className="cart-item__price-container">
+              <span className="cart-item__price">{formattedPrice}</span>
+              <button
                 onClick={removeItemFromCart}
                 className="store-item__remove-button"
               >
                 <Treshold />
               </button>
+              <div className="cart-item__money-container">
+                <CountButtons
+                  value={inputValue}
+                  plus={handleIncreaseCount}
+                  minus={handleDecreaseCount}
+                  input={handleChangeCount}
+                  cn={true}
+                  blur={onBlurHandler}
+                />
               </div>
-            </div>
-
-            <div className="cart-item__money-container">
-              <CountButtons
-                value={inputValue}
-                plus={handleIncreaseCount}
-                minus={handleDecreaseCount}
-                input={handleChangeCount}
-                cn={true}
-              />
-              
             </div>
           </div>
         </div>
