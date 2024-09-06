@@ -55,3 +55,9 @@
 .About-us__license--pics img:hover {
   scale: 1.2;
 }
+@media (max-width: 950px) {
+  .About-us__license--pics {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

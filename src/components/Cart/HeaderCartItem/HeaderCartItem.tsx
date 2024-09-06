@@ -44,14 +44,17 @@ const HeaderCartItem: FC<IHeaderCartItemProps> = ({ children, setActive }) => {
 
   return (
     <li className="header-cart-item">
-      <img
-        className="header-cart-item__image"
-        src={
-          `https://murman-salut.ru/salut-catalog-icons/${children?.title.replace(/("+)|(;+)|(:+)/g, '')}.webp` ||
-          placeholder
-        }
-        alt="placeholder"
-      />
+      <Link to={`/store/${children?.title}`} state={{ from: location }}>
+        <img
+          className="header-cart-item__image"
+          src={
+            `https://murman-salut.ru/salut-catalog-icons/${children?.title.replace(/("+)|(;+)|(:+)/g, '')}.webp` ||
+            placeholder
+          }
+          alt="placeholder"
+        />
+      </Link>
+
       <div className="header-cart-item__info">
         <Link to={`/store/${children?.title}`} state={{ from: location }}>
           <h3 className="header-cart-item__title">{children?.title}</h3>

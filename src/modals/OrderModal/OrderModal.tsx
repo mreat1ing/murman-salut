@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import ModalContainer from 'src/modals/ModalContainer';
@@ -10,7 +10,7 @@ import {
 import './OrderModal.scss';
 
 interface IOrderModal {
-  handleSubmit: () => void;
+  handleSubmit: (name: string, phone: string, email: string, address: string) => void;
   total: string;
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -81,11 +81,16 @@ const OrderModal: FC<IOrderModal> = ({ handleSubmit, total, onClose }) => {
       updateFormItems({ items: formData });
     }
   };
+  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSubmit(name, phone, email, address);
+  };
+
 
   if (modalContainer) {
     return createPortal(
       <ModalContainer onClose={onClose}>
-        <form className={'order-modal'} onSubmit={handleSubmit}>
+        <form className={'order-modal'} onSubmit={(e) => submitHandler(e)}>
           <div className={'order-modal__items-wrapper'}>
             <h2 className="order-modal__title">Оформление заказа</h2>
             <div className={'order-modal__item'}>

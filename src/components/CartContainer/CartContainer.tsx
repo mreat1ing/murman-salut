@@ -1,14 +1,18 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import './CartContainer.scss';
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 import { IStore } from 'src/interfaces/store.interface';
 import useDispatchedModalActions from 'src/hooks/useDispatchedModalActions/useDispatchedModalActions';
+import useDispatchedStoreActions from 'src/hooks/useDispatchedStoreActions/useDispatchedStoreActions';
 import OrderModal from 'src/modals/OrderModal';
 import CartList from 'src/components/CartList/';
+import { sendForm } from 'src/utils/sendData.utils';
 
 
 const CartContainer: FC = () => {
+  const [status, setStatus] = useState('');
   const amount = useSelector(
     (state: IStore) => state.storeItemsReducer.amountCart
   );
@@ -22,6 +26,7 @@ const CartContainer: FC = () => {
     items.reduce((acc, element) => acc + element.price * element.count, 0)
   );
   const { setModalClose, setModalOpen } = useDispatchedModalActions();
+  const { setAmountCart, setCartItems } = useDispatchedStoreActions();
   const isModalOpen = useSelector(
     (state: IStore) => state.modalStore.isModalOpen
   );
@@ -39,6 +44,22 @@ const CartContainer: FC = () => {
       ];
     return suffix;
   };
+  const submitForm = (name: string, phone: string, email: string, address: string) => {
+    const data = {name: name, phone: phone, email: email, address: address, sum: items.reduce((acc, element) => acc + element.price * element.count, 0), amount: amount, items: items};
+    sendForm(data).then(p => {
+      setStatus(p);
+      if(p !== 'error') {
+        setAmountCart(0);
+        setCartItems([]);
+      }
+    });
+    setModalClose();
+  
+  };
+
+  if (status) {
+    return <Navigate to={`/message/${status}`} replace />;
+  }
 
   return (
     <div className="cart-list">
@@ -60,7 +81,7 @@ const CartContainer: FC = () => {
       ) : null}
       {isModalOpen && (
         <OrderModal
-          handleSubmit={() => {}}
+          handleSubmit={submitForm}
           total={formattedPrice}
           onClose={setModalClose}
         />

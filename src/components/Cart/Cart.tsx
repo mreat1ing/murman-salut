@@ -5,6 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import HeaderButton from 'src/ui/header-button';
 import { IStore } from 'src/interfaces/store.interface';
 import { ICartItem } from 'src/interfaces/cartItem.interface';
+import burgerToggle from 'src/utils/burgerToggle.utils';
 
 import './Cart.scss';
 import HeaderCartItem from './HeaderCartItem';
@@ -54,6 +55,11 @@ const Cart: FC = () => {
       ];
     return suffix;
   }
+  useEffect(() => {
+    if (!isCartHover) {
+      burgerToggle();
+    } return () => burgerToggle();
+  }, [isCartHover]);
 
   const hoverHandler = (value: boolean) => {
     if (navType === 'burger') return;
@@ -64,11 +70,11 @@ const Cart: FC = () => {
       document.querySelector('.header__cart-list')?.classList.add('hide');
     } else
       document.querySelector('.header__cart-list')?.classList.remove('hide');
-    timer.current = setTimeout(() => setCartHover(value), 500);
+    timer.current = setTimeout(() => setCartHover(value), 300);
   };
   const removeItemHandler = (value: boolean) => {
     clearTimeout(timer.current);
-    timer.current = setTimeout(() => setCartHover(value), 500);
+    timer.current = setTimeout(() => setCartHover(value), 300);
     document.querySelector('.header__cart-list')?.classList.remove('hide');
   };
 
