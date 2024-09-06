@@ -12,6 +12,7 @@
 }
 
 body {
+  background-color: black;
   margin: 0;
   margin-right: calc(-1 * (100vw - 100%)) !important;
   overflow-x: hidden;
@@ -34,7 +35,8 @@ code {
 
 a {
   text-decoration: none;
-  color: initial;
+  color: transparent;
+  -webkit-appearance: none;
 }
 
 .app-container {
