@@ -1,11 +1,16 @@
-import { FC, memo } from 'react';
+import { FC, memo, useEffect } from 'react';
 
 import BgVideo from 'src/common/bgVideo';
 import CategoriesSpinner from 'src/components/CategoriesList';
+import { removeOredered } from 'src/utils/sessionStorage.utils';
 
 import './MainContent.scss';
 
 const MainContent: FC = () => {
+  useEffect(() => {
+    removeOredered();
+  }, []);
+  
   return (
     <div className="main-content">
       <div className="main-content__categories">
