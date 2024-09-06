@@ -11,6 +11,7 @@
   transition: transform 0.3s;
   width: 100vw;
   transform: translateY(-4.5rem);
+  user-select: none;
 }
 
 .header.header--visible {
