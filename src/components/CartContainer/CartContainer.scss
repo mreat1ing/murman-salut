@@ -19,6 +19,7 @@
   font-size: 1.25rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
+  transition: all 1s ease-in;
 }
 .cart-list__button {
   display: flex;
@@ -74,5 +75,13 @@
     margin-bottom: 1rem;
     margin-left: 16px;
   }
+  .cart-list__button {
+    margin-right: 1rem;
+  }
   
+}
+@media (max-width: 482px) {
+  .cart-list__sum {
+    font-size: 1rem;
+  }
 }
