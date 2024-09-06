@@ -31,6 +31,15 @@ const parseData = (): ISessionStorage => {
 
 const fullSessionStorageClear = () => {
   sessionStorage.removeItem('form');
+  sessionStorage.setItem('ordered', 'true');
+};
+const removeOredered = () => {
+  sessionStorage.removeItem('ordered');
+};
+const getOrdered = () => {
+  const res = sessionStorage.getItem('ordered');
+  if (res !== null) return JSON.parse(res);
+  return  false;
 };
 
-export { updateFormItems, getItems, fullSessionStorageClear, getEdited };
+export { updateFormItems, getItems, fullSessionStorageClear, getEdited, removeOredered, getOrdered };
