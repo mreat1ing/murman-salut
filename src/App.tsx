@@ -15,15 +15,20 @@ import About from './pages/about';
 import Card from './pages/card';
 import MainPage from './pages/main';
 import CartPage from './pages/cart';
+import NotFound from './pages/404';
+import Thanks from './pages/thanks';
+import PrivateRoute from './components/PrivateRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
+      <Route path="*" element={<NotFound />} />
       <Route path="/" element={<MainPage />} />
       <Route path="/store" element={<Store />} />
       <Route path="/store/:id" element={<Card />} />
       <Route path="/about" element={<About />} />
       <Route path="/cart" element={<CartPage />} />
+      <Route path="/message/:id" element={<PrivateRoute><Thanks/></PrivateRoute>} />
     </Route>
   )
 );
