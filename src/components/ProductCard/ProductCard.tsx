@@ -26,7 +26,7 @@ interface IProductCardProps {
   item: IStoreItem;
 }
 
-const ProductCard: FC<IProductCardProps> = ({items, item}) => {
+const ProductCard: FC<IProductCardProps> = ({ items, item }) => {
   const [previewType, setPreviewType] = useState('image');
   const [inStorage, setInStorage] = useState(
     isItemInCart(item ? item.title : '')
@@ -250,15 +250,18 @@ const ProductCard: FC<IProductCardProps> = ({items, item}) => {
       <div className="product-card__info-wrapper">
         <div className="product-card__info">
           <h3 className="product-card__title">{item?.title}</h3>
-
-          <div className="product-card__description">
-            <span>Количество в упаковке: {item?.value}</span>
-          </div>
         </div>
         <div className="product-card__buy-container">
+          <div className="product-card__buy-container--group">
+            <div className="product-card__description">
+            <span>Количество в упаковке: {item?.value}</span>
+          </div>
           <div className="product-card__money-container">
             <span className="product-card__price">Цена: {formattedPrice}</span>
           </div>
+          </div>
+          
+          <div className="product-card__buy-button--group">
           {inStorage ? (
             <CountButtons
               value={inputValue}
@@ -270,13 +273,14 @@ const ProductCard: FC<IProductCardProps> = ({items, item}) => {
             />
           ) : (
             <button
-              className="product-card__buy-button store-item__buy-button"
+              className="product-card__buy-button"
               onClick={handleButtonClick}
               disabled={item?.hide}
             >
               {item?.hide ? 'Товара нет в наличии' : 'Купить'}
             </button>
           )}
+          </div>
         </div>
       </div>
     </div>

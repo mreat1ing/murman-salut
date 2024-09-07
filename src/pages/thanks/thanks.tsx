@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 
 import './thanks.scss';
@@ -33,6 +33,12 @@ const data = {
 };
 
 const Thanks: FC = () => {
+  useEffect(() => {
+    document.body.scrollTo({
+      top: 0,
+    });
+    document.title = 'Заказ - Кольский Салют';
+  }, []);
   const { id }: { id?: data } = useParams<string>();
   const element = id && data[id];
 

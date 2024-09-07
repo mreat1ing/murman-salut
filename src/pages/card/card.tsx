@@ -22,6 +22,10 @@ const Card: FC = () => {
   const isItemsLoading = useSelector((state: IStore) => state.storeItemsReducer.isItemsLoading);
   useEffect(() => {
     setIsLoadingStarted(true);
+    document.body.scrollTo({
+      top: 0,
+    });
+    document.title = 'Страница товара - Кольский Салют';
   }, []);
   if (isItemsLoading) {
     return <ProductCard items={[]} item={defaultItemData}/>;
