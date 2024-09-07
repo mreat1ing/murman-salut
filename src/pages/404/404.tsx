@@ -1,11 +1,15 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import './404.scss';
 
 const NotFound: FC = () => {
-  // //TODO: replace with spinner or smth like that
-  // if (isItemsLoading) return <h2>LOADING</h2>;
+  useEffect(() => {
+    document.body.scrollTo({
+      top: 0,
+    });
+    document.title = 'Страница не найдена';
+  }, []);
 
   return (
     <div className='not-found'>
