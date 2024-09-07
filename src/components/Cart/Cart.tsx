@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import HeaderButton from 'src/ui/header-button';
 import { IStore } from 'src/interfaces/store.interface';
 import { ICartItem } from 'src/interfaces/cartItem.interface';
-import burgerToggle from 'src/utils/burgerToggle.utils';
+// import burgerToggle from 'src/utils/burgerToggle.utils';
 
 import './Cart.scss';
 import HeaderCartItem from './HeaderCartItem';
@@ -55,10 +55,12 @@ const Cart: FC = () => {
       ];
     return suffix;
   }
+
   useEffect(() => {
-    if (!isCartHover) {
-      burgerToggle();
-    } return () => burgerToggle();
+    if (isCartHover) {
+      // burgerToggle();
+      document.body.classList.add('burger--expanded');
+    } return () => document.body.classList.remove('burger--expanded');
   }, [isCartHover]);
 
   const hoverHandler = (value: boolean) => {
