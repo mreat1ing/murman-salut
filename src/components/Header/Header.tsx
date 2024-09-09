@@ -22,11 +22,15 @@ const Header: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (scrollDirection === 'up') {
-      headerContainer.current?.classList.add('header--visible');
-    } else if (scrollDirection === 'down') {
-      headerContainer.current?.classList.remove('header--visible');
-    }
+    if (Number(scrollPosition) !== 0) {
+      if (scrollDirection === 'up') {
+        headerContainer.current?.classList.add('header--visible');
+      } else if (scrollDirection === 'down') {
+        headerContainer.current?.classList.remove('header--visible');
+      }
+    } else {headerContainer.current?.classList.add('header--visible');}
+    
+
     if (Number(scrollPosition) < 10) setExpanded(false);
     else if (Number(scrollPosition) > 0 && scrollDirection === 'up')
       setExpanded(true);
@@ -74,29 +78,32 @@ const Header: FC = () => {
               <div className="burger-bg" onClick={burgerToggle} />
               <BurgerMenu />
               <div className="navigation-wrapper no-border">
-              <nav className="navigation-burger">
-                <CloseButton handleClick={burgerToggle} />
-                <ul className="navigation-burger__list" onClick={burgerToggle}>
-                  <li className="navigation-burger__item">
-                    <NavLink to="/">
-                      <HeaderButton>Главная</HeaderButton>
-                    </NavLink>
-                  </li>
-                  <li className="navigation-burger__item">
-                    <NavLink to="/store">
-                      <HeaderButton>Магазин</HeaderButton>
-                    </NavLink>
-                  </li>
-                  <li className="navigation-burger__item">
-                    <NavLink to="/about">
-                      <HeaderButton>О нас</HeaderButton>
-                    </NavLink>
-                  </li>
-                  <li className="navigation-burger__item">
-                    <Cart />
-                  </li>
-                </ul>
-              </nav>
+                <nav className="navigation-burger">
+                  <CloseButton handleClick={burgerToggle} />
+                  <ul
+                    className="navigation-burger__list"
+                    onClick={burgerToggle}
+                  >
+                    <li className="navigation-burger__item">
+                      <NavLink to="/">
+                        <HeaderButton>Главная</HeaderButton>
+                      </NavLink>
+                    </li>
+                    <li className="navigation-burger__item">
+                      <NavLink to="/store">
+                        <HeaderButton>Магазин</HeaderButton>
+                      </NavLink>
+                    </li>
+                    <li className="navigation-burger__item">
+                      <NavLink to="/about">
+                        <HeaderButton>О нас</HeaderButton>
+                      </NavLink>
+                    </li>
+                    <li className="navigation-burger__item">
+                      <Cart />
+                    </li>
+                  </ul>
+                </nav>
               </div>
             </div>
           )}

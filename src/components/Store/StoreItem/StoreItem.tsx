@@ -68,14 +68,13 @@ const StoreItemTest: FC<IStoreItemProps> = ({ children }) => {
     const newCount = Number(inputValue) - 1;
     if (newCount > MIN_INPUT) {
       setInputValue(String(newCount));
-      const newItems = cartItems
-        .map((item) => {
-          let result = item;
-          if (item._id === children?._id) {
-            result = { ...item, count: item.count - 1 };
-          }
-          return result;
-        });
+      const newItems = cartItems.map((item) => {
+        let result = item;
+        if (item._id === children?._id) {
+          result = { ...item, count: item.count - 1 };
+        }
+        return result;
+      });
       const amountItems = newItems.reduce(
         (acc, element) => acc + element.count,
         0
@@ -86,27 +85,26 @@ const StoreItemTest: FC<IStoreItemProps> = ({ children }) => {
       return newCount;
     } else {
       const newItems = cartItems
-      .map((item) => {
-        let result = item;
-        if (item._id === children?._id) {
-          result = { ...item, count: item.count - 1 };
-        }
-        return result;
-      })
-      .filter((item) => {
-        if (item.count <= 0) return false;
-        return true;
-      });
-    const amountItems = newItems.reduce(
-      (acc, element) => acc + element.count,
-      0
-    );
-    setCartItems(newItems);
-    setAmountCart(amountItems);
-    addItemCart(newItems);
-    setInStorage(false);
+        .map((item) => {
+          let result = item;
+          if (item._id === children?._id) {
+            result = { ...item, count: item.count - 1 };
+          }
+          return result;
+        })
+        .filter((item) => {
+          if (item.count <= 0) return false;
+          return true;
+        });
+      const amountItems = newItems.reduce(
+        (acc, element) => acc + element.count,
+        0
+      );
+      setCartItems(newItems);
+      setAmountCart(amountItems);
+      addItemCart(newItems);
+      setInStorage(false);
     }
-    
   };
   const addItemCountFromInput = (storeItem: IStoreItem, inputCount: number) => {
     let exists = false;
@@ -294,24 +292,26 @@ const StoreItemTest: FC<IStoreItemProps> = ({ children }) => {
                     <span className="store-item__price">{formattedPrice}</span>
                   </div>
                 </div>
-                {inStorage ? (
-                  <CountButtons
-                    value={inputValue}
-                    plus={handleButtonClick}
-                    minus={handleDecreaseCount}
-                    input={handleChangeCount}
-                    cn={false}
-                    blur={onBlurHandler}
-                  />
-                ) : (
-                  <button
-                    className="store-item__buy-button"
-                    onClick={handleButtonClick}
-                    disabled={children?.hide}
-                  >
-                    {children?.hide ? 'Товара нет в наличии' : 'Купить'}
-                  </button>
-                )}
+                <div className="store-item__buttons">
+                  {inStorage ? (
+                    <CountButtons
+                      value={inputValue}
+                      plus={handleButtonClick}
+                      minus={handleDecreaseCount}
+                      input={handleChangeCount}
+                      cn={false}
+                      blur={onBlurHandler}
+                    />
+                  ) : (
+                    <button
+                      className="store-item__buy-button"
+                      onClick={handleButtonClick}
+                      disabled={children?.hide}
+                    >
+                      {children?.hide ? 'Товара нет в наличии' : 'Купить'}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           )}

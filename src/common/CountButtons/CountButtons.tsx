@@ -27,12 +27,12 @@ const CountButtons: FC<ICountButtons> = ({
 
   return (
     <div className={cn ? 'count-cart-buttons' : 'count-buttons'}>
-      <button
+      <div
         className="count-buttons__button count-buttons__button-decrease"
         onClick={minus}
       >
         <i className="count-buttons__icon" />
-      </button>
+      </div>
       <input
         onBlur={value === '' ? blur : () => {}}
         className="count-buttons__input"
@@ -42,12 +42,12 @@ const CountButtons: FC<ICountButtons> = ({
         type="number"
         value={value}
       />
-      <button
+      <div
         className="count-buttons__button count-buttons__button-increase"
         onClick={plus}
       >
         <i className="count-buttons__icon" />
-      </button>
+      </div>
     </div>
   );
 };
