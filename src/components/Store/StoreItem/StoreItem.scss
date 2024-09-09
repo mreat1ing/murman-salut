@@ -187,6 +187,10 @@
   width: 60%;
   margin-left: 32px;
 }
+.store-item__buttons {
+  width: 100%;
+}
+
 @media (max-width: 482px) {
   .store-item {
     border-radius: 0;
@@ -208,7 +212,10 @@
     align-items: start;
     flex-direction: row;
   }
-  .store-item__buy-button {
+  // .store-item__buy-button {
+  //   width: 30%;
+  // }
+  .store-item__buttons {
     width: 30%;
   }
 }
