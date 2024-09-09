@@ -79,7 +79,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 8px;
+  margin-top: 8px; 
 }
 @media (max-width: 700px) {
   .footer {
@@ -91,7 +91,8 @@
     max-height: 100%;
   }
   .footer__copyright-left {
-    max-width: 100%;
+    max-width: calc(100% - 48px);
+    margin: 0 16px 40px 32px;
   }
   .footer__contacts-right {
     margin: 32px auto; 
