@@ -19,6 +19,7 @@ import imageIcon from 'src/assets/icons/image-icon.png';
 import videoIcon from 'src/assets/icons/video-icon.png';
 import placeholder from 'src/assets/img/item-placeholder.png';
 import useDispatchedStoreActions from 'src/hooks/useDispatchedStoreActions/useDispatchedStoreActions';
+import ProductVideo from 'src/common/ProductVideo';
 
 import './ProductCard.scss';
 interface IProductCardProps {
@@ -218,10 +219,8 @@ const ProductCard: FC<IProductCardProps> = ({ items, item }) => {
           <img width={30} height={30} src={videoIcon} alt="video" />
         </button>
       </div>
-      <Link to={comesFrom}>
-        <button className="product-card__button product-card__button-back">
+      <Link to={comesFrom} className="back-link">
           Назад
-        </button>
       </Link>
       <div className={`product-card__media-container ${previewType}`}>
         {previewType === 'image' && (
@@ -235,16 +234,18 @@ const ProductCard: FC<IProductCardProps> = ({ items, item }) => {
           />
         )}
         {previewType === 'video' && (
-          <video
-            autoPlay
-            className="product-card__video"
-            muted
-            disablePictureInPicture
-            disableRemotePlayback
-            controls
-          >
-            <source src={item?.link} type="video/mp4" />
-          </video>
+          // <video
+          //   autoPlay
+          //   className="product-card__video"
+          //   muted
+          //   disablePictureInPicture
+          //   disableRemotePlayback
+          //   controls
+          // >
+          //   <source src={'https://rutube.ru/play/embed/d051df7b520f0662d9d39b7a01e36861/'} />
+          //   {/* <source src={item?.link} type="video/mp4" /> */}
+          // </video>
+          <ProductVideo link={item?.link} />
         )}
       </div>
       <div className="product-card__info-wrapper">
@@ -254,32 +255,34 @@ const ProductCard: FC<IProductCardProps> = ({ items, item }) => {
         <div className="product-card__buy-container">
           <div className="product-card__buy-container--group">
             <div className="product-card__description">
-            <span>Количество в упаковке: {item?.value}</span>
+              <span>Количество в упаковке: {item?.value}</span>
+            </div>
+            <div className="product-card__money-container">
+              <span className="product-card__price">
+                Цена: {formattedPrice}
+              </span>
+            </div>
           </div>
-          <div className="product-card__money-container">
-            <span className="product-card__price">Цена: {formattedPrice}</span>
-          </div>
-          </div>
-          
+
           <div className="product-card__buy-button--group">
-          {inStorage ? (
-            <CountButtons
-              value={inputValue}
-              plus={handleButtonClick}
-              minus={handleDecreaseCount}
-              input={handleChangeCount}
-              cn={false}
-              blur={onBlurHandler}
-            />
-          ) : (
-            <button
-              className="product-card__buy-button"
-              onClick={handleButtonClick}
-              disabled={item?.hide}
-            >
-              {item?.hide ? 'Товара нет в наличии' : 'Купить'}
-            </button>
-          )}
+            {inStorage ? (
+              <CountButtons
+                value={inputValue}
+                plus={handleButtonClick}
+                minus={handleDecreaseCount}
+                input={handleChangeCount}
+                cn={false}
+                blur={onBlurHandler}
+              />
+            ) : (
+              <button
+                className="product-card__buy-button"
+                onClick={handleButtonClick}
+                disabled={item?.hide}
+              >
+                {item?.hide ? 'Товара нет в наличии' : 'Купить'}
+              </button>
+            )}
           </div>
         </div>
       </div>
