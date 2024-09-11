@@ -27,8 +27,9 @@ const CategoriesList: FC = () => {
                   <li key={item.value}>
                     <Link to={`/store?category=${item.title}`}>
                       <CategoryCard
+                        cn={true}
                         title={item.title}
-                        value={item.title}
+                        value={item.value}
                         image={iconFilter(item.title)}
                         active={false}
                       />
@@ -40,6 +41,7 @@ const CategoriesList: FC = () => {
                   <li key={item.value}>
                     <Link to={`/store?category=${item.title}`}>
                       <CategoryCard
+                        cn={false}
                         title={item.title}
                         value={item.title}
                         image={iconFilter(item.title)}

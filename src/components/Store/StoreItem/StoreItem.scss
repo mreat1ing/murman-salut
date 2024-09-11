@@ -166,6 +166,7 @@
   box-shadow: none;
   background-color: transparent;
   background-image: none;
+  cursor: auto;
 }
 
 .store-item__buy-button:disabled:hover {
@@ -194,7 +195,7 @@
 @media (max-width: 482px) {
   .store-item {
     border-radius: 0;
-    padding: 8px;
+    padding: 8px 0;
   }
   .store-item__info {
     padding: 0 0 0 16px;
@@ -212,10 +213,17 @@
     align-items: start;
     flex-direction: row;
   }
-  // .store-item__buy-button {
-  //   width: 30%;
-  // }
   .store-item__buttons {
     width: 30%;
+  }
+}
+@media (max-width: 380px) {
+  .store-item__buy-container {
+    flex-direction: column;
+    align-items: start;
+  }
+  .store-item__buttons {
+    margin: 0 32px;
+    width: 50%;
   }
 }

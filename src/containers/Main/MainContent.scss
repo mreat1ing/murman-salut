@@ -54,15 +54,19 @@
 @media (max-width: 700px) {
   .main-content__delivery-points {
     display: block;
+    border: none;
+    border-bottom: 1px solid grey;
+    border-radius: 0;
+    margin: 0px 10px;
+    width: calc(100% - 20px);
+    padding: 0;
     span {
       font-size: 16px;
     }
     p {
       font-size: 12px;
     }
-    border: none;
-    border-bottom: 1px solid grey;
-    border-radius: 0;
+    
   }
   .main-content__delivery-map {
     min-width: 320px;

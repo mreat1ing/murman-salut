@@ -1,1 +1,1 @@
-export const CATEGORIES_COUNT = 10;
+export const CATEGORIES_COUNT = 12;

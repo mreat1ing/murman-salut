@@ -32,6 +32,7 @@ const parseData = (): ISessionStorage => {
 const fullSessionStorageClear = () => {
   sessionStorage.removeItem('form');
   sessionStorage.setItem('ordered', 'true');
+  localStorage.removeItem('cart');
 };
 const removeOredered = () => {
   sessionStorage.removeItem('ordered');
