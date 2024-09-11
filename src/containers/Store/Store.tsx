@@ -46,9 +46,23 @@ const Store: FC = () => {
     if (!categories.length) return;
     setCategoriesList(
       categories.map((el) => {
-        return (
+        if (el.title === 'Все') {
+          return (
+            <li key={el.value}>
+              <CategoryCard
+                cn={true}
+                onClick={() => setSearchParams(`category=${el.title}`)}
+                title={el.title}
+                value={el.title}
+                image={iconFilter(el.title)}
+              />
+            </li>
+          );
+        } else {
+          return (
           <li key={el.value}>
             <CategoryCard
+              cn={false}
               onClick={() => setSearchParams(`category=${el.title}`)}
               title={el.title}
               value={el.title}
@@ -56,6 +70,8 @@ const Store: FC = () => {
             />
           </li>
         );
+        }
+       
       })
     );
   }, [categories, setSearchParams]);

@@ -7,6 +7,7 @@ interface ICategoryCard {
   value?: string;
   onClick?: () => void;
   active?: boolean;
+  cn: boolean;
 }
 
 import { IStore } from 'src/interfaces/store.interface';
@@ -18,6 +19,7 @@ const CategoryCard: FC<ICategoryCard> = ({
   image,
   onClick,
   active = true,
+  cn
 }) => {
   const [isActive, setActive] = useState(false);
   const curCategory = useSelector(
@@ -33,7 +35,7 @@ const CategoryCard: FC<ICategoryCard> = ({
 
   return (
     <button
-      className={`category-card ${isActive ? 'active' : ''}`}
+      className={ cn ? `category-card-all ${isActive ? 'active' : ''}` : `category-card ${isActive ? 'active' : ''}`}
       onClick={onClick}
       disabled={isActive && active}
     >
