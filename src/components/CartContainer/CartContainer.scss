@@ -78,10 +78,13 @@
   .cart-list__button {
     margin-right: 1rem;
   }
-  
+  .cart-list__text {
+    padding: 1rem;
+  }
 }
 @media (max-width: 482px) {
   .cart-list__sum {
     font-size: 1rem;
+    font-weight: 600;
   }
 }

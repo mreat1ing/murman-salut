@@ -10,7 +10,6 @@ import OrderModal from 'src/modals/OrderModal';
 import CartList from 'src/components/CartList/';
 import { sendForm } from 'src/utils/sendData.utils';
 
-
 const CartContainer: FC = () => {
   const [status, setStatus] = useState('');
   const amount = useSelector(
@@ -44,17 +43,32 @@ const CartContainer: FC = () => {
       ];
     return suffix;
   };
-  const submitForm = (name: string, phone: string, email: string, address: string) => {
-    const data = {name: name, phone: phone, email: email, address: address, sum: items.reduce((acc, element) => acc + element.price * element.count, 0), amount: amount, items: items};
-    sendForm(data).then(p => {
+  const submitForm = (
+    name: string,
+    phone: string,
+    email: string,
+    address: string
+  ) => {
+    const data = {
+      name: name,
+      phone: phone,
+      email: email,
+      address: address,
+      sum: items.reduce(
+        (acc, element) => acc + element.price * element.count,
+        0
+      ),
+      amount: amount,
+      items: items,
+    };
+    sendForm(data).then((p) => {
       setStatus(p);
-      if(p !== 'error') {
+      if (p !== 'error') {
         setAmountCart(0);
         setCartItems([]);
       }
     });
     setModalClose();
-  
   };
 
   if (status) {
@@ -65,6 +79,12 @@ const CartContainer: FC = () => {
     <div className="cart-list">
       <h1 className="cart-list__title">Корзина</h1>
       <CartList amount={amount} items={items} />
+      <div className="cart-list__text">
+        Оплата при получении товара. Каждый товар сопровождается сертификатом. <br />
+        Срок доставки требует персонального согласования. Цена доставки: <br />
+        Мурманск, Кола, Североморск — 200 руб. в течение 12 часов СРОЧНАЯ 
+        ДОСТАВКА и доставка в другие города по договорённости. 
+      </div>
       {amount && items ? (
         <div className="cart-list__result">
           <div className="cart-list__sum">
