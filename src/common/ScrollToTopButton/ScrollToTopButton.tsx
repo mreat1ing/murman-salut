@@ -49,7 +49,7 @@ const ScrollToTopButton: FC = () => {
               right: curPos,
             }
           : {
-              bottom: curPos + 15,
+              bottom: curPos - 25,
               right: curPos,
               transform: 'translateY(100px)',
             }
