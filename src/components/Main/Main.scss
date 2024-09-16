@@ -4,6 +4,37 @@
   max-width: 1512px;
   margin: 0 auto;
 }
+@media (max-width: 1512px) {
+  .middle-container {
+    max-width: 1290px;
+  }
+  
+}
+@media (max-width: 1290px) {
+  .middle-container {
+    max-width: 1000px;
+  }
+  
+}
+@media (max-width: 1000px) {
+  .middle-container {
+    max-width: 800px;
+  }
+  
+}
+@media (max-width: 800px) {
+  .middle-container {
+    max-width: 100%;
+  }
+  
+}
+// @media (max-width: 650px) {
+//   .middle-container {
+//     max-width: 100%;
+//   }
+  
+// }
+
 @media (max-width: 700px) {
   .middle-container {
     margin: 0;
