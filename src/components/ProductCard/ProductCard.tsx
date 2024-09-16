@@ -28,7 +28,7 @@ interface IProductCardProps {
 }
 
 const ProductCard: FC<IProductCardProps> = ({ items, item }) => {
-  const [previewType, setPreviewType] = useState('image');
+  const [previewType, setPreviewType] = useState('video');
   const [inStorage, setInStorage] = useState(
     isItemInCart(item ? item.title : '')
   );
@@ -207,20 +207,20 @@ const ProductCard: FC<IProductCardProps> = ({ items, item }) => {
     <div className="product-card">
       <div className="product-card__preview-type">
         <button
-          className={`product-card__button product-card__image-type${previewType === 'image' ? ' active' : ''}`}
-          onClick={() => setPreviewType('image')}
-        >
-          <img width={40} height={40} src={imageIcon} alt="img" />
-        </button>
-        <button
           className={`product-card__button product-card__video-type${previewType === 'video' ? ' active' : ''}`}
           onClick={() => setPreviewType('video')}
         >
           <img width={30} height={30} src={videoIcon} alt="video" />
         </button>
+        <button
+          className={`product-card__button product-card__image-type${previewType === 'image' ? ' active' : ''}`}
+          onClick={() => setPreviewType('image')}
+        >
+          <img width={40} height={40} src={imageIcon} alt="img" />
+        </button>
       </div>
       <Link to={comesFrom} className="back-link">
-          Назад
+        Назад
       </Link>
       <div className={`product-card__media-container ${previewType}`}>
         {previewType === 'image' && (
