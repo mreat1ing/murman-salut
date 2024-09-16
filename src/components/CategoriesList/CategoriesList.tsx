@@ -1,6 +1,10 @@
 import { FC, memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Grid } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/grid';
 
 import './CategoriesList.scss';
 import { IStore } from 'src/interfaces/store.interface';
@@ -19,8 +23,18 @@ const CategoriesList: FC = () => {
   return (
     <div className="categories-spinner">
       {!categoriesLoading ? (
-        <ul className="category-spinner__slider">
-          {categories &&
+        <Swiper
+          slidesPerView={'auto'}
+          spaceBetween={30}
+          // pagination={{
+          //   clickable: true,
+          // }}
+          grid={{ rows: 2 }}
+          navigation={true}
+          modules={[Navigation, Grid]}
+          className="store-page__categories--swiper"
+        >
+          {/* {categories &&
             categories.map((item) => {
               if (item.title === 'Все')
                 return (
@@ -50,8 +64,21 @@ const CategoriesList: FC = () => {
                   </li>
                 );
               }
-            })}
-        </ul>
+            })} */}
+          {categories &&
+            categories.map((el) => (
+              <SwiperSlide key={el.title}>
+                <Link to={`/store?category=${el.title}`}>
+                  <CategoryCard
+                    cn={el.title === 'Все'}
+                    title={el.title}
+                    value={el.title}
+                    image={iconFilter(el.title)}
+                  />
+                </Link>
+              </SwiperSlide>
+            ))}
+        </Swiper>
       ) : (
         <CategorySkeleton />
       )}
