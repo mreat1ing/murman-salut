@@ -30,6 +30,8 @@ const iconFilter = (title: string) => {
       return salut;
     case 'Вертушки летающие':
       return fly;
+    case 'Вертушки':
+      return fly;
     case 'Вертушки наземные':
       return nofly;
     case 'Бенгальские свечи':
@@ -50,6 +52,8 @@ const iconFilter = (title: string) => {
       return batary;
     case 'Дневные салюты':
       return daySalut;
+    case 'Фестивальные шары':
+      return shari;
     default:
       return null;
   }
