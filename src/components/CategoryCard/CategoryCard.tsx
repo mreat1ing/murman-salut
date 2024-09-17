@@ -46,7 +46,7 @@ const CategoryCard: FC<ICategoryCard> = ({
           alt={title}
         />
       )}
-      <span className="category-card__title">{title}</span>
+      <span className="category-card__title">{title === 'Пневмохлопушки' ? `${title.substring(0, 6) + ' ' + title.substring(6)}` : title}</span>
     </button>
   );
 };

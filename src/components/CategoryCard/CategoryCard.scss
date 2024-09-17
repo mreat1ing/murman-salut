@@ -54,6 +54,7 @@
 .category-card:not(.active):hover, .category-card-all:not(.active):hover {
   background-color: #d8d8d8;
 }
+
 @media (max-width: 505px) {
   .category-card__image {
     margin-right: 10px;
