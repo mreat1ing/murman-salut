@@ -1,16 +1,19 @@
-import { FC, FormEvent, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { InputMask, InputMaskChangeEvent } from 'primereact/inputmask';
 
 import ModalContainer from 'src/modals/ModalContainer';
-import {
-  updateFormItems,
-  getItems,
-} from 'src/utils/sessionStorage.utils';
+import { updateFormItems, getItems } from 'src/utils/sessionStorage.utils';
 
 import './OrderModal.scss';
 
 interface IOrderModal {
-  handleSubmit: (name: string, phone: string, email: string, address: string) => void;
+  handleSubmit: (
+    name: string,
+    phone: string,
+    email: string,
+    address: string
+  ) => void;
   total: string;
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -86,7 +89,6 @@ const OrderModal: FC<IOrderModal> = ({ handleSubmit, total, onClose }) => {
     handleSubmit(name, phone, email, address);
   };
 
-
   if (modalContainer) {
     return createPortal(
       <ModalContainer onClose={onClose}>
@@ -112,7 +114,7 @@ const OrderModal: FC<IOrderModal> = ({ handleSubmit, total, onClose }) => {
               <label htmlFor="phone" className={'order-modal__item-label'}>
                 Телефон:{' '}
               </label>
-              <input
+              {/* <input
                 className={'order-modal__item-input'}
                 placeholder="+79999999999"
                 type="tel"
@@ -122,6 +124,19 @@ const OrderModal: FC<IOrderModal> = ({ handleSubmit, total, onClose }) => {
                 maxLength={14}
                 required={true}
                 onChange={(e) => onChange('phone', e.target.value)}
+              /> */}
+              <InputMask
+                mask={'+7(999)999-99-99'}
+                id="phone"
+                onChange={(e: InputMaskChangeEvent) => {
+                  const value = e.value as string;
+                  onChange('phone', value);
+                }}
+                required
+                value={phone || ''}
+                type="tel"
+                placeholder={'+7(___)___-__-__'}
+                className="order-modal__item-input"
               />
             </div>
             <div className={'order-modal__item'}>
