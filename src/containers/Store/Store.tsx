@@ -15,13 +15,14 @@ import { IStore } from 'src/interfaces/store.interface';
 import { iconFilter } from 'src/ui/icons/categoryIcons/CategoryIcons';
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
 import Select from 'src/ui/Select';
+import PriceMessageOnScroll from 'src/common/priceMessageOnScroll';
 
 import ItemList from '../../components/Store/ItemList';
 
 import './Store.scss';
 
 const Store: FC = () => {
-  const [categoriesList, setCategoriesList] = useState<React.ReactElement[]>();
+  // const [categoriesList, setCategoriesList] = useState<React.ReactElement[]>();
   const [swiperCategories, setSwiperCategories] =
     useState<React.ReactElement[]>();
   const { setItems, setItemsLoading } = useDispatchedStoreActions();
@@ -50,63 +51,34 @@ const Store: FC = () => {
   }, [searchParams, listItems]);
 
   useEffect(() => {
-    if (!categories.length) return;
-    setCategoriesList(
-      categories.map((el) => {
-        if (el.title === 'Все') {
-          return (
-            <li key={el.value}>
-              <CategoryCard
-                cn={true}
-                onClick={() => setSearchParams(`category=${el.title}`)}
-                title={el.title}
-                value={el.title}
-                image={iconFilter(el.title)}
-              />
-            </li>
-          );
-        } else {
-          return (
-            <li key={el.value}>
-              <CategoryCard
-                cn={false}
-                onClick={() => setSearchParams(`category=${el.title}`)}
-                title={el.title}
-                value={el.title}
-                image={iconFilter(el.title)}
-              />
-            </li>
-          );
-        }
-      })
-    );
-    // setSwiperCategories(
-    //   categories.map((el, index, arr) => {
-    //     const newIndex = index > 0 ? index + 2 : index;
-    //     const nextElem = arr[newIndex + 1] || null;
-    //     const currElem = arr[newIndex];
-    //     return (
-    //       <SwiperSlide key={el.title}>
-    //         {currElem && (
+    // if (!categories.length) return;
+    // setCategoriesList(
+    //   categories.map((el) => {
+    //     if (el.title === 'Все') {
+    //       return (
+    //         <li key={el.value}>
     //           <CategoryCard
-    //             cn={currElem.title === 'Все'}
-    //             onClick={() => setSearchParams(`category=${currElem.title}`)}
-    //             title={currElem.title}
-    //             value={currElem.title}
-    //             image={iconFilter(currElem.title)}
+    //             cn={true}
+    //             onClick={() => setSearchParams(`category=${el.title}`)}
+    //             title={el.title}
+    //             value={el.title}
+    //             image={iconFilter(el.title)}
     //           />
-    //         )}
-    //         {nextElem && (
+    //         </li>
+    //       );
+    //     } else {
+    //       return (
+    //         <li key={el.value}>
     //           <CategoryCard
-    //             cn={nextElem.title === 'Все'}
-    //             onClick={() => setSearchParams(`category=${nextElem.title}`)}
-    //             title={nextElem.title}
-    //             value={nextElem.title}
-    //             image={iconFilter(nextElem.title)}
+    //             cn={false}
+    //             onClick={() => setSearchParams(`category=${el.title}`)}
+    //             title={el.title}
+    //             value={el.title}
+    //             image={iconFilter(el.title)}
     //           />
-    //         )}
-    //       </SwiperSlide>
-    //     );
+    //         </li>
+    //       );
+    //     }
     //   })
     // );
     setSwiperCategories(
@@ -124,37 +96,6 @@ const Store: FC = () => {
         );
       })
     );
-    // const categoriesByTwo = (array: {title: string, value: string}[]) => {
-    //   // const newArray = [...array, array[0]];
-    //   const size = 2;
-    //   const subarray = [];
-    //   for (let i = 0; i < Math.ceil(array.length / size); i++) {
-    //     subarray[i] = array.slice(i * size, i * size + size);
-    //   }
-    //   setSwiperCategories(
-    //     subarray.map((el) => {
-    //       return (
-    //         <SwiperSlide key={el[0].title}>
-    //           <CategoryCard
-    //               cn={el[0].title === 'Все'}
-    //               onClick={() => setSearchParams(`category=${el[0].title}`)}
-    //               title={el[0].title}
-    //               value={el[0].title}
-    //               image={iconFilter(el[0].title)}
-    //             />
-    //             {el[1] ? <CategoryCard
-    //               cn={el[1].title === 'Все'}
-    //               onClick={() => setSearchParams(`category=${el[1].title}`)}
-    //               title={el[1].title}
-    //               value={el[1].title}
-    //               image={iconFilter(el[1].title)}
-    //             />: null}
-    //         </SwiperSlide>
-    //       );
-    //     })
-    //   );
-    // };
-    // categoriesByTwo(categories);
   }, [categories, setSearchParams]);
 
   useEffect(() => {
@@ -228,6 +169,7 @@ const Store: FC = () => {
   return (
     <div className="store-page">
       {isCategoriesLoading && <CategorySkeleton />}
+      <PriceMessageOnScroll />
       {!isCategoriesLoading && (
         // <ul className="store-page__categories">{categoriesList}</ul>
         <Swiper

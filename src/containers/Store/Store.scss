@@ -73,6 +73,7 @@
 .store__header {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .store__title {
