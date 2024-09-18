@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import './CartContainer.scss';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 
 import { IStore } from 'src/interfaces/store.interface';
 import useDispatchedModalActions from 'src/hooks/useDispatchedModalActions/useDispatchedModalActions';
@@ -76,37 +76,54 @@ const CartContainer: FC = () => {
   }
 
   return (
-    <div className="cart-list">
-      <h1 className="cart-list__title">Корзина</h1>
-      <CartList amount={amount} items={items} />
-      <div className="cart-list__text">
-        Оплата при получении товара. Каждый товар сопровождается сертификатом. <br />
-        Срок доставки требует персонального согласования. Цена доставки: <br />
-        Мурманск, Кола, Североморск — 200 руб. в течение 12 часов СРОЧНАЯ 
-        ДОСТАВКА и доставка в другие города по договорённости. 
-      </div>
+    <>
       {amount && items ? (
-        <div className="cart-list__result">
-          <div className="cart-list__sum">
-            <div className="cart-list__sum-amount">
-              Всего: {amount + ''}{' '}
-              {pluralize(Number(amount), ['упаковка', 'упаковки', 'упаковок'])}
-            </div>
-            <div className="cart-list__sum-price">Итого: {formattedPrice} </div>
+        <div className="cart-list">
+          <h1 className="cart-list__title">Корзина</h1>
+          <CartList amount={amount} items={items} />
+          <div className="cart-list__text">
+            Оплата при получении товара. Каждый товар сопровождается
+            сертификатом. <br />
+            Срок доставки требует персонального согласования. Цена доставки:{' '}
+            <br />
+            Мурманск, Кола, Североморск — 200 руб. в течение 12 часов СРОЧНАЯ
+            ДОСТАВКА и доставка в другие города по договорённости.
           </div>
-          <button className="cart-list__button" onClick={setModalOpen}>
-            Оформить заказ
-          </button>
+          <div className="cart-list__result">
+            <div className="cart-list__sum">
+              <div className="cart-list__sum-amount">
+                Всего: {amount + ''}{' '}
+                {pluralize(Number(amount), [
+                  'упаковка',
+                  'упаковки',
+                  'упаковок',
+                ])}
+              </div>
+              <div className="cart-list__sum-price">
+                Итого: {formattedPrice}{' '}
+              </div>
+            </div>
+            <button className="cart-list__button" onClick={setModalOpen}>
+              Оформить заказ
+            </button>
+          </div>
+
+          {isModalOpen && (
+            <OrderModal
+              handleSubmit={submitForm}
+              total={formattedPrice}
+              onClose={setModalClose}
+            />
+          )}
         </div>
-      ) : null}
-      {isModalOpen && (
-        <OrderModal
-          handleSubmit={submitForm}
-          total={formattedPrice}
-          onClose={setModalClose}
-        />
+      ) : (
+        <div className="cart-list--blank">
+          <h1 className="cart-list__title--blank">Корзина</h1>
+          <CartList amount={amount} items={items} />
+          <NavLink className="cart-list__link--blank" to={'/store'}>В магазин</NavLink>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

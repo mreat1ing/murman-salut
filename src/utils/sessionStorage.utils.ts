@@ -42,5 +42,17 @@ const getOrdered = () => {
   if (res !== null) return JSON.parse(res);
   return  false;
 };
+const removeMessage = () => {
+  sessionStorage.setItem('priceMessage', 'false');
+};
+const getMessage = () => {
+  const bool = sessionStorage.getItem('priceMessage');
+  if (bool) {
+    return JSON.parse(bool);
+  } else {
+    return true;
+  }
+};
 
-export { updateFormItems, getItems, fullSessionStorageClear, getEdited, removeOredered, getOrdered };
+
+export { updateFormItems, getItems, fullSessionStorageClear, getEdited, removeOredered, getOrdered, removeMessage, getMessage };

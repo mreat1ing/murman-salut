@@ -30,19 +30,35 @@ export const db = {
     }
     return items;
   },
-  loadCats: async () => {
-    const snapshot = await get(child(dbRef, 'currCategories'));
-    const categories = [];
+//   loadCats: async () => {
+//     const snapshot = await get(child(dbRef, 'currCategories'));
+//     const categories = [];
 
-    if (snapshot.exists()) {
-      const data = snapshot.val();
+//     if (snapshot.exists()) {
+//       const data = snapshot.val();
 
-      for (const item of Object.values(data)) {
-        categories.push(item);
-      }
-    } else {
-      throw new Error('No data available');
+//       for (const item of Object.values(data)) {
+//         categories.push(item);
+//       }
+//     } else {
+//       throw new Error('No data available');
+//     }
+//     return categories;
+//   },
+// };
+loadCats: async () => {
+  const snapshot = await get(child(dbRef, 'categories2'));
+  const categories = [];
+
+  if (snapshot.exists()) {
+    const data = snapshot.val();
+
+    for (const item of Object.values(data)) {
+      categories.push(item);
     }
-    return categories;
-  },
+  } else {
+    throw new Error('No data available');
+  }
+  return categories;
+},
 };

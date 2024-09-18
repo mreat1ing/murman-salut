@@ -6,7 +6,6 @@ import './Select.scss';
 interface IOption {
   title: string;
   value: string;
-  id: string;
 }
 
 interface ISelectProps {
@@ -40,8 +39,7 @@ const Select: FC<ISelectProps> = ({ title, options, onChange, currCategory }) =>
         {options.map((el) => (
           <li
             className='select__item'
-            key={el.id}
-            id={el.id}
+            key={el.title}
             onClick={() => {
               setValue(el.title);
               onChange(el.value);

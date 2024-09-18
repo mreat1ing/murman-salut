@@ -1,6 +1,11 @@
 import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Grid } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/grid';
 
 import CategoryCard from 'src/components/CategoryCard';
 import CategorySkeleton from 'src/common/categorySkeleton';
@@ -10,13 +15,16 @@ import { IStore } from 'src/interfaces/store.interface';
 import { iconFilter } from 'src/ui/icons/categoryIcons/CategoryIcons';
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
 import Select from 'src/ui/Select';
+import PriceMessageOnScroll from 'src/common/priceMessageOnScroll';
 
 import ItemList from '../../components/Store/ItemList';
 
 import './Store.scss';
 
 const Store: FC = () => {
-  const [categoriesList, setCategoriesList] = useState<React.ReactElement[]>();
+  // const [categoriesList, setCategoriesList] = useState<React.ReactElement[]>();
+  const [swiperCategories, setSwiperCategories] =
+    useState<React.ReactElement[]>();
   const { setItems, setItemsLoading } = useDispatchedStoreActions();
   const categories = useSelector(
     (state: IStore) => state.storeItemsReducer.categories
@@ -43,35 +51,49 @@ const Store: FC = () => {
   }, [searchParams, listItems]);
 
   useEffect(() => {
-    if (!categories.length) return;
-    setCategoriesList(
+    // if (!categories.length) return;
+    // setCategoriesList(
+    //   categories.map((el) => {
+    //     if (el.title === 'Все') {
+    //       return (
+    //         <li key={el.value}>
+    //           <CategoryCard
+    //             cn={true}
+    //             onClick={() => setSearchParams(`category=${el.title}`)}
+    //             title={el.title}
+    //             value={el.title}
+    //             image={iconFilter(el.title)}
+    //           />
+    //         </li>
+    //       );
+    //     } else {
+    //       return (
+    //         <li key={el.value}>
+    //           <CategoryCard
+    //             cn={false}
+    //             onClick={() => setSearchParams(`category=${el.title}`)}
+    //             title={el.title}
+    //             value={el.title}
+    //             image={iconFilter(el.title)}
+    //           />
+    //         </li>
+    //       );
+    //     }
+    //   })
+    // );
+    setSwiperCategories(
       categories.map((el) => {
-        if (el.title === 'Все') {
-          return (
-            <li key={el.value}>
-              <CategoryCard
-                cn={true}
-                onClick={() => setSearchParams(`category=${el.title}`)}
-                title={el.title}
-                value={el.title}
-                image={iconFilter(el.title)}
-              />
-            </li>
-          );
-        } else {
-          return (
-          <li key={el.value}>
+        return (
+          <SwiperSlide key={el.title}>
             <CategoryCard
-              cn={false}
+              cn={el.title === 'Все'}
               onClick={() => setSearchParams(`category=${el.title}`)}
               title={el.title}
               value={el.title}
               image={iconFilter(el.title)}
             />
-          </li>
+          </SwiperSlide>
         );
-        }
-       
       })
     );
   }, [categories, setSearchParams]);
@@ -94,16 +116,35 @@ const Store: FC = () => {
       const cat = categories.find(
         (el) => el.title === searchParams.get('category')
       );
-      if (cat?.subcategories) {
-        for (let i = 0; i < cat.subcategories.length; i++) {
+      if (!cat) {
+        const flattenCategories: { title: string; value: string }[] = [];
+        categories.forEach((item) => {
+          if (item.subcategories) {
+            item.subcategories.forEach((el) => flattenCategories.push(el));
+          } else {
+            flattenCategories.push(item);
+          }
+        });
+        const cuurCat = flattenCategories.find(
+          (el) => el.title === searchParams.get('category')
+        );
+        list = list.concat(
+          items.filter((item) => item.category === cuurCat?.value)
+        );
+      } else {
+        if (cat?.subcategories) {
+          for (let i = 0; i < cat.subcategories.length; i++) {
+            list = list.concat(
+              items.filter(
+                (item) => item.category === cat.subcategories[i].value
+              )
+            );
+          }
+        } else {
           list = list.concat(
-            items.filter((item) => item.category === cat.subcategories[i].value)
+            items.filter((item) => item.category === cat?.value)
           );
         }
-      } else {
-        list = list.concat(
-          items.filter((item) => item.category === cat?.value)
-        );
       }
     }
     setListItems(list);
@@ -128,18 +169,40 @@ const Store: FC = () => {
   return (
     <div className="store-page">
       {isCategoriesLoading && <CategorySkeleton />}
+      <PriceMessageOnScroll />
       {!isCategoriesLoading && (
-        <ul className="store-page__categories">{categoriesList}</ul>
+        // <ul className="store-page__categories">{categoriesList}</ul>
+        <Swiper
+          slidesPerView={'auto'}
+          spaceBetween={30}
+          // pagination={{
+          //   clickable: true,
+          // }}
+          grid={{ rows: 2 }}
+          navigation={true}
+          modules={[Navigation, Grid]}
+          className="store-page__categories--swiper"
+        >
+          {swiperCategories}
+        </Swiper>
       )}
       {searchParams.size && !isCategoriesLoading ? (
         <div className="store">
           <div className="store__header">
             <h2 className="store__title">{searchParams.get('category')}</h2>
+            {/* <Select
+              title={'Подкатегории'}
+              options={[]}
+              onChange={(value) => {
+                sortItems(value);
+              }}
+              currCategory={curCategory}
+            /> */}
             <Select
               title={'Сортировка'}
               options={[
-                { title: 'Сначала недорогие', id: 'first', value: 'min' },
-                { title: 'Сначала дорогие', id: 'second', value: 'max' },
+                { title: 'Сначала недорогие', value: 'min' },
+                { title: 'Сначала дорогие', value: 'max' },
               ]}
               onChange={(value) => {
                 sortItems(value);
