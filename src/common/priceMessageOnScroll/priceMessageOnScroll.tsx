@@ -45,7 +45,7 @@ const PriceMessageOnScroll: FC = () => {
           style={
             isShowScrollTopButton
               ? {
-                  bottom: curPos,
+                  bottom: curPos + 30,
                   margin: 'auto',
                 }
               : {
