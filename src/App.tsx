@@ -34,7 +34,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const { setCategories, setCategoriesLoading, setItems, setItemsLoading } =
+  const { setCategories, setCategoriesLoading, setItems, setItemsLoading, setDeliveryPoints, setDeliveryPointsLoading } =
     useDispatchedStoreActions();
 
   useEffect(() => {
@@ -42,14 +42,18 @@ function App() {
     setItemsLoading(true);
     const categories = db.loadCats();
     setCategoriesLoading(true);
-    Promise.all([items, categories]).then((p) => {
+    const deliveryPoints = db.loadPoints();
+    setDeliveryPointsLoading(true);
+    Promise.all([items, categories, deliveryPoints]).then((p) => {
       setItems(p[0]);
       setCategories(p[1]);
+      setDeliveryPoints(p[2]);
       setItemsLoading(false);
       setCategoriesLoading(false);
+      setDeliveryPointsLoading(false);
     });
     
-  }, [setCategories, setCategoriesLoading, setItems, setItemsLoading]);
+  }, [setCategories, setCategoriesLoading, setItems, setItemsLoading, setDeliveryPoints, setDeliveryPointsLoading]);
   return <RouterProvider router={router} />;
 }
 
