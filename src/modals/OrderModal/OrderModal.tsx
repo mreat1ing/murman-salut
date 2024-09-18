@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { InputMask, InputMaskChangeEvent } from 'primereact/inputmask';
 
@@ -92,29 +92,30 @@ const OrderModal: FC<IOrderModal> = ({ handleSubmit, total, onClose }) => {
   if (modalContainer) {
     return createPortal(
       <ModalContainer onClose={onClose}>
-        <form className={'order-modal'} onSubmit={(e) => submitHandler(e)}>
-          <div className={'order-modal__items-wrapper'}>
-            <h2 className="order-modal__title">Оформление заказа</h2>
-            <div className={'order-modal__item'}>
-              <label htmlFor={'name'} className={'order-modal__item-label'}>
-                Имя:{' '}
-              </label>
-              <input
-                className={'order-modal__item-input'}
-                placeholder="Иванов Иван"
-                id="name"
-                value={name || ''}
-                minLength={2}
-                maxLength={30}
-                required={true}
-                onChange={(e) => onChange('name', e.target.value)}
-              />
-            </div>
-            <div className={'order-modal__item'}>
-              <label htmlFor="phone" className={'order-modal__item-label'}>
-                Телефон:{' '}
-              </label>
-              {/* <input
+        <div className="order-modal__wrapper">
+          <form className={'order-modal'} onSubmit={(e) => submitHandler(e)}>
+            <div className={'order-modal__items-wrapper'}>
+              <h2 className="order-modal__title">Оформление заказа</h2>
+              <div className={'order-modal__item'}>
+                <label htmlFor={'name'} className={'order-modal__item-label'}>
+                  Имя:{' '}
+                </label>
+                <input
+                  className={'order-modal__item-input'}
+                  placeholder="Иванов Иван"
+                  id="name"
+                  value={name || ''}
+                  minLength={2}
+                  maxLength={30}
+                  required={true}
+                  onChange={(e) => onChange('name', e.target.value)}
+                />
+              </div>
+              <div className={'order-modal__item'}>
+                <label htmlFor="phone" className={'order-modal__item-label'}>
+                  Телефон:{' '}
+                </label>
+                {/* <input
                 className={'order-modal__item-input'}
                 placeholder="+79999999999"
                 type="tel"
@@ -125,77 +126,78 @@ const OrderModal: FC<IOrderModal> = ({ handleSubmit, total, onClose }) => {
                 required={true}
                 onChange={(e) => onChange('phone', e.target.value)}
               /> */}
-              <InputMask
-                mask={'+7(999)999-99-99'}
-                id="phone"
-                onChange={(e: InputMaskChangeEvent) => {
-                  const value = e.value as string;
-                  onChange('phone', value);
-                }}
-                required
-                value={phone || ''}
-                type="tel"
-                placeholder={'+7(___)___-__-__'}
-                className="order-modal__item-input"
-              />
-            </div>
-            <div className={'order-modal__item'}>
-              <label htmlFor="email" className={'order-modal__item-label'}>
-                Email адрес:{' '}
-              </label>
-              <input
-                className={'order-modal__item-input'}
-                placeholder="example@email.com"
-                id="email"
-                value={email || ''}
-                minLength={7}
-                maxLength={35}
-                checked={age || false}
-                required={true}
-                onChange={(e) => onChange('email', e.target.value)}
-              />
-            </div>
+                <InputMask
+                  mask={'9(999)999-99-99'}
+                  id="phone"
+                  onChange={(e: InputMaskChangeEvent) => {
+                    const value = e.value as string;
+                    onChange('phone', value);
+                  }}
+                  required
+                  value={phone || ''}
+                  type="tel"
+                  placeholder={'8(123)456-78-90'}
+                  className="order-modal__item-input"
+                />
+              </div>
+              <div className={'order-modal__item'}>
+                <label htmlFor="email" className={'order-modal__item-label'}>
+                  Email адрес:{' '}
+                </label>
+                <input
+                  className={'order-modal__item-input'}
+                  placeholder="example@email.com"
+                  id="email"
+                  value={email || ''}
+                  minLength={7}
+                  maxLength={35}
+                  checked={age || false}
+                  required={true}
+                  onChange={(e) => onChange('email', e.target.value)}
+                />
+              </div>
 
-            <div className={'order-modal__item'}>
-              <label htmlFor="address" className={'order-modal__item-label'}>
-                Адрес для доставки, или самовывоз:{' '}
-              </label>
-              <input
-                className={'order-modal__item-input'}
-                placeholder="Мурманск, Ленина 12 кв 12"
-                id="address"
-                value={address || ''}
-                minLength={5}
-                maxLength={70}
-                required={true}
-                onChange={(e) => onChange('address', e.target.value)}
-              />
+              <div className={'order-modal__item'}>
+                <label htmlFor="address" className={'order-modal__item-label'}>
+                  Адрес для доставки, или самовывоз:{' '}
+                </label>
+                <input
+                  className={'order-modal__item-input'}
+                  placeholder="Мурманск, Ленина 12 кв 12"
+                  id="address"
+                  value={address || ''}
+                  minLength={5}
+                  maxLength={70}
+                  required={true}
+                  onChange={(e) => onChange('address', e.target.value)}
+                />
+              </div>
+              <div className={'order-modal__item-age'}>
+                <input
+                  className={'order-modal__item-input'}
+                  type="checkbox"
+                  id="age"
+                  checked={age || false}
+                  required={true}
+                  onChange={(e) => onChange('age', e.target.checked)}
+                />
+                <label htmlFor="age" className={'order-modal__item-label'}>
+                  Мне есть 18 лет{' '}
+                </label>
+              </div>
+              <div className={'order-modal__sum'}>
+                <div className="order-modal__sum-price">Итого: {total}</div>
+                <button
+                  className={'order-modal__submit bg-video__button'}
+                  type="submit"
+                  disabled={false}
+                >
+                  Оформить
+                </button>
+              </div>
             </div>
-            <div className={'order-modal__item-age'}>
-              <input
-                className={'order-modal__item-input'}
-                type="checkbox"
-                id="age"
-                checked={age || false}
-                required={true}
-                onChange={(e) => onChange('age', e.target.checked)}
-              />
-              <label htmlFor="age" className={'order-modal__item-label'}>
-                Мне есть 18 лет{' '}
-              </label>
-            </div>
-            <div className={'order-modal__sum'}>
-              <div className="order-modal__sum-price">Итого: {total}</div>
-              <button
-                className={'order-modal__submit bg-video__button'}
-                type="submit"
-                disabled={false}
-              >
-                Оформить
-              </button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </ModalContainer>,
       modalContainer
     );

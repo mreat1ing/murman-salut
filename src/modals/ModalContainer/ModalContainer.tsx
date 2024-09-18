@@ -17,11 +17,20 @@ const ModalContainer: FC<IModalContainer> = ({ children, onClose }) => {
     return () => bodyElement?.classList.remove('modal-open');
   }, []);
 
-  const handleCloseButton = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
+  const handleCloseButton = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose(false);
+      }
+    },
+    [onClose]
+  );
+  const closeHandler = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains('modal-wrapper')) {
       onClose(false);
     }
-  },[onClose]);
+  };
 
   useEffect(() => {
     window.addEventListener('keyup', handleCloseButton);
@@ -30,13 +39,13 @@ const ModalContainer: FC<IModalContainer> = ({ children, onClose }) => {
   }, [handleCloseButton]);
 
   return (
-    <div className="modal-wrapper" onClick={() => onClose(false)}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={() => onClose(false)}>
-          Закрыть
-        </button>
-        {children}
-      </div>
+    <div className="modal-wrapper" onMouseDown={closeHandler}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <button className="modal-close" onClick={() => onClose(false)}>
+            Закрыть
+          </button>
+          {children}
+        </div>
     </div>
   );
 };
