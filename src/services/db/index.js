@@ -30,22 +30,21 @@ export const db = {
     }
     return items;
   },
-//   loadCats: async () => {
-//     const snapshot = await get(child(dbRef, 'currCategories'));
-//     const categories = [];
+  loadPoints: async () => {
+    const snapshot = await get(child(dbRef, 'points'));
+    const deliveryPoints = {};
 
-//     if (snapshot.exists()) {
-//       const data = snapshot.val();
+    if (snapshot.exists()) {
+      const data = snapshot.val();
 
-//       for (const item of Object.values(data)) {
-//         categories.push(item);
-//       }
-//     } else {
-//       throw new Error('No data available');
-//     }
-//     return categories;
-//   },
-// };
+      for (const item of Object.entries(data)) {
+        deliveryPoints[item[0]] = item[1];
+      }
+    } else {
+      throw new Error('No data available');
+    }
+    return deliveryPoints;
+  },
 loadCats: async () => {
   const snapshot = await get(child(dbRef, 'categories2'));
   const categories = [];
