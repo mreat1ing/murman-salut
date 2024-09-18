@@ -9,14 +9,19 @@ import {
   setCategories,
   setCartItems,
   setCurrCategory,
+  setDeliveryPoints,
+  setDeliveryPointsLoading,
 } from 'src/store/reducers/storeItemsReducer/actions/storeItemsActions';
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
 import { ICategories } from 'src/interfaces/categories.interface';
+import { IDeliveryPoints } from 'src/interfaces/deliveryPoints.interface';
 
 const useDispatchedStoreActions = () => {
   const dispatch = useDispatch();
 
   return {
+    setDeliveryPoints: (item: IDeliveryPoints) => dispatch(setDeliveryPoints(item)),
+    setDeliveryPointsLoading: (value: boolean) => dispatch(setDeliveryPointsLoading(value)),
     addItem: (item: IStoreItem) => dispatch(addItem(item)),
     setAmountCart: (count: number) => dispatch(setAmountCart(count)),
     setItems: (items: IStoreItem[]) => dispatch(setItems(items)),
