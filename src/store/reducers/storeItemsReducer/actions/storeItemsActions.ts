@@ -1,5 +1,6 @@
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
 import { ICategories } from 'src/interfaces/categories.interface';
+import { IDeliveryPoints } from 'src/interfaces/deliveryPoints.interface';
 
 import {
   ADD_ITEM,
@@ -10,6 +11,8 @@ import {
   SET_CATEGORIES,
   SET_CART_ITEMS,
   SET_CURR_CATEGORY,
+  SET_DELIVERY_POINTS,
+  SET_DELIVERY_POINTS_LOADING,
 } from '../constants';
 
 export const addItem = (item: IStoreItem) => {
@@ -42,4 +45,12 @@ export const setCartItems = (items: IStoreItem[]) => {
 
 export const setCurrCategory = (value: string) => {
   return { type: SET_CURR_CATEGORY, payload: value };
+};
+
+export const setDeliveryPoints = (data: IDeliveryPoints) => {
+  return { type: SET_DELIVERY_POINTS, payload: data };
+};
+
+export const setDeliveryPointsLoading = (value: boolean) => {
+  return { type: SET_DELIVERY_POINTS_LOADING, payload: value };
 };

@@ -3,6 +3,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { IStoreItem } from 'src/interfaces/storeItem.interface';
 import { getAmountCart, getCartItems } from 'src/utils/ls.utils';
 import { ICategories } from 'src/interfaces/categories.interface';
+import { IDeliveryPoints } from 'src/interfaces/deliveryPoints.interface';
 
 import { IStoreItems } from './storeItems.interface';
 import {
@@ -14,6 +15,8 @@ import {
   SET_CATEGORIES,
   SET_CART_ITEMS,
   SET_CURR_CATEGORY,
+  SET_DELIVERY_POINTS,
+  SET_DELIVERY_POINTS_LOADING,
 } from './constants';
 
 const initialState = {
@@ -24,6 +27,8 @@ const initialState = {
   isItemsLoading: false,
   isCategoriesLoading: false,
   cartItems: getCartItems() || <IStoreItem[]>[],
+  points: <IDeliveryPoints>{},
+  isPointsLoading: false,
 };
 
 export const storeItemsReducer = (
@@ -47,6 +52,10 @@ export const storeItemsReducer = (
       return { ...state, cartItems: action.payload };
     case SET_CURR_CATEGORY: 
       return { ...state, curCategory: action.payload };
+    case SET_DELIVERY_POINTS: 
+      return { ...state, points: action.payload };
+    case SET_DELIVERY_POINTS_LOADING: 
+      return { ...state, isPointsLoading: action.payload };
     default:
       return state;
   }
