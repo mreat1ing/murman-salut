@@ -1,16 +1,42 @@
-import { FC, memo, useEffect } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import BgVideo from 'src/common/bgVideo';
 import CategoriesSpinner from 'src/components/CategoriesList';
 import { removeOredered } from 'src/utils/sessionStorage.utils';
-
+import { IStore } from 'src/interfaces/store.interface';
 import './MainContent.scss';
+import { PLACES_COUNT } from 'src/constants/points';
+
 
 const MainContent: FC = () => {
+  const [link, setLink] = useState<string>('');
+  const [places, setPlaces] = useState<{value: string}[]>([]);
+  const isPointsLoading = useSelector(
+    (state: IStore) => state.storeItemsReducer.isPointsLoading
+  );
+  const points = useSelector((state: IStore) => state.storeItemsReducer.points);
+
   useEffect(() => {
     removeOredered();
   }, []);
-  
+  useEffect(() => {
+    if (typeof points['map'] !== 'undefined' && !isPointsLoading) {  
+    if (points.map && points.places) {
+      setLink(points.map.link);
+      setPlaces(points.places);
+    }    
+    }
+  }, [points, isPointsLoading]);
+
+  const normalizedPlaces = places.map((el) => {
+    return (<p key={el.value}>{el.value}</p>);
+  });
+  const skeleton = Array(PLACES_COUNT).fill('Загрузка...').map((el, i) => {
+    return (<p key={i}>{el}</p>);
+  });
+
+
   return (
     <div className="main-content">
       <div className="main-content__categories">
@@ -23,22 +49,12 @@ const MainContent: FC = () => {
       <div className="main-content__delivery">
         <div className="main-content__delivery-points">
           <span>Точки розничных продаж (пункты выдачи):</span>
-          <p>г. Североморск Магазин «ЛАВКА ЧУДЕС» ул. Сафонова-17</p>
-          <p>г. Мурманск пр. Героев Североморцев-100 а. Пункт выдачи</p>
-          <p>г. Мончегорск: ул Ленина-8, маг. ФЕЙЕРВЕРКИ</p>
-          <p>
-            г. Мончегорск: ул. Новопроложенная - 16, ТЦ «ТАИР» 2 этаж отдел
-            КАНЦЕЛЯРИЯ
-          </p>
-          <p>г. Апатиты магазин УПАКОШКА ул. Космонавтов -36</p>
-          <p>
-            г. Кандалакша Магазин «Индустрия праздника» Привокзальная площадь-1
-          </p>
+          {isPointsLoading ? skeleton : normalizedPlaces}
         </div>
         <iframe
           className="main-content__delivery-map"
           title={'Пункты выдачи заказов'}
-          src="https://yandex.ru/map-widget/v1/?um=constructor%3A45cc2f28132f945a8e0beb490436c4ca7a5e093b7d00b154d6e0aeee153425a0&amp;source=constructor"
+          src={link}
         ></iframe>
       </div>
     </div>
